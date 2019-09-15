@@ -1,12 +1,13 @@
-package pe.edu.upc.bunker
+package pe.edu.upc.bunker.modelViews
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import pe.edu.upc.bunker.R
 
-class MainActivity : AppCompatActivity() {
+class OnBoardingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_onboarding)
     }
 }

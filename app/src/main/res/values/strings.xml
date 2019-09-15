@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Bunker</string>
+    <string name="onBoarding_image">OnBoarding Image</string>
 </resources>
