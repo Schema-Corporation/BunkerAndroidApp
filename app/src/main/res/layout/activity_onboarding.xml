@@ -12,7 +12,7 @@
         android:layout_height="600dp"
         android:contentDescription="@string/onBoarding_image"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/Bunker_Logo" />
+        app:srcCompat="@drawable/ic_launcher_background" />
     <Button
         android:id="@+id/startButton"
         android:layout_width="wrap_content"

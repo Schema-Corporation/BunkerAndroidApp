@@ -2,4 +2,11 @@
     <string name="app_name">Bunker</string>
     <string name="onBoarding_image">OnBoarding Image</string>
     <string name="OnBoardButtonText">Empezar</string>
+    <string name="company_name">Bunker App</string>
+    <string name="company_logo_description">Company Logo</string>
+    <string name="log_in_text">Log in</string>
+    <string name="username_placeholder">username</string>
+    <string name="field_username_label">Username:</string>
+    <string name="password_placeholder">password</string>
+    <string name="field_password_label">Password:</string>
 </resources>

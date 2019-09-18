@@ -22,7 +22,7 @@ class OnBoardingActivity : AppCompatActivity() {
         startButton.setOnClickListener {
             val sharedPref: SharedPreferences = getSharedPreferences("FirstRun", Context.MODE_PRIVATE)
             sharedPref.edit().putBoolean("FirstRun",false).apply()
-            val loginIntent = Intent(this,MainActivity::class.java)
+            val loginIntent = Intent(this,LoginActivity::class.java)
             startActivity(loginIntent)
             finish()
         }
