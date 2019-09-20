@@ -1,23 +1,25 @@
 package pe.edu.upc.bunker.repository
 
+import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitClientInstance {
+class RetrofitClientInstance {
+    companion object {
+        private val BASE_URL = "https://bunker-253200.appspot.com/"
+        private lateinit var retrofit : Retrofit
+    }
 
-    private var retrofit: Retrofit? = null
-    private val BASE_URL = "https://bunker-253200.appspot.com/"
+    fun getRetrofitInstance() : Retrofit {
 
-    // create a retrofit instance, only if it has not been created yet.
+        val builder = GsonBuilder()
+        builder.excludeFieldsWithoutExposeAnnotation()
+        val gson = builder.create()
 
-    val retrofitInstance: Retrofit?
-        get() {
-            if (retrofit == null) {
-                retrofit = retrofit2.Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build()
-            }
-            return retrofit
-        }
+        retrofit = retrofit2.Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+        return retrofit
+    }
 }
