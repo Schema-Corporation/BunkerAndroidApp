@@ -3,9 +3,9 @@ package pe.edu.upc.bunker.modelViews
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import pe.edu.upc.bunker.R
 
 class OnBoardingActivity : AppCompatActivity() {
@@ -20,7 +20,7 @@ class OnBoardingActivity : AppCompatActivity() {
     }
     private fun pressButton() {
         startButton.setOnClickListener {
-            val sharedPref: SharedPreferences = getSharedPreferences("FirstRun", Context.MODE_PRIVATE)
+            val sharedPref: SharedPreferences = getSharedPreferences("Flags", Context.MODE_PRIVATE)
             sharedPref.edit().putBoolean("FirstRun",false).apply()
             val loginIntent = Intent(this,LoginActivity::class.java)
             startActivity(loginIntent)

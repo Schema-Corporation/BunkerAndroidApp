@@ -9,4 +9,9 @@
     <string name="field_username_label">Username:</string>
     <string name="password_placeholder">password</string>
     <string name="field_password_label">Password:</string>
+    <string name="welcome_title">Welcome</string>
+    <string name="register_link">Dont have an account? Click here to Register</string>
+    <string name="sign_up_title">Sign-Up</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="sign_up_text">Sign Up</string>
 </resources>
