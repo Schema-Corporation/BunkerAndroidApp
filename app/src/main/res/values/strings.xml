@@ -4,14 +4,17 @@
     <string name="OnBoardButtonText">Empezar</string>
     <string name="company_name">Bunker App</string>
     <string name="company_logo_description">Company Logo</string>
-    <string name="log_in_text">Log in</string>
-    <string name="username_placeholder">username</string>
-    <string name="field_username_label">Username:</string>
-    <string name="password_placeholder">password</string>
-    <string name="field_password_label">Password:</string>
+    <string name="log_in_text">Inicio de sesión</string>
+    <string name="username_placeholder">usuario</string>
+    <string name="field_username_label">Usuario:</string>
+    <string name="password_placeholder">contraseña</string>
+    <string name="field_password_label">Contraseña:</string>
     <string name="welcome_title">Welcome</string>
-    <string name="register_link">Dont have an account? Click here to Register</string>
-    <string name="sign_up_title">Sign-Up</string>
-    <string name="cancel_text">Cancel</string>
-    <string name="sign_up_text">Sign Up</string>
+    <string name="register_link">¿No tienes una cuenta? Click aquí para registrarte</string>
+    <string name="sign_up_title">Registro</string>
+    <string name="cancel_text">Cancelar</string>
+    <string name="sign_up_text">Regístrate</string>
+    <string name="item_home_title">Inicio</string>
+    <string name="item_notification_title">Notificaciones</string>
+    <string name="item_configuration_title">Configuración</string>
 </resources>
