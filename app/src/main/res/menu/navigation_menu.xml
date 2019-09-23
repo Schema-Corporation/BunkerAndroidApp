@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/home_item"
+        android:id="@+id/home_item_nav_bar"
         android:title="@string/item_home_title"
         android:icon="@drawable/ic_home_black_24dp"
         />
 
     <item
-        android:id="@+id/list_item"
+        android:id="@+id/list_item_nav_bar"
         android:title="@string/item_notification_title"
         android:icon="@drawable/ic_format_list_bulleted_black_24dp"
         />
 
     <item
-        android:id="@+id/configuration_item"
+        android:id="@+id/configuration_item_nav_bar"
         android:title="@string/item_configuration_title"
         android:icon="@drawable/ic_person_black_24dp"
         />

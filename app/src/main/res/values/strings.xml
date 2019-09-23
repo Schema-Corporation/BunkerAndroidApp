@@ -17,4 +17,8 @@
     <string name="item_home_title">Inicio</string>
     <string name="item_notification_title">Notificaciones</string>
     <string name="item_configuration_title">Configuración</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home_fragment_text">Home Fragment</string>
+    <string name="notifications_fragment_text">Notifications Fragment</string>
 </resources>

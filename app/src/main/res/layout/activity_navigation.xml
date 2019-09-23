@@ -5,7 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".modelViews.NavigationActivity">
+<FrameLayout
+    android:id="@+id/flBlank"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toTopOf="@id/btm_nav_main">
 
+</FrameLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/btm_nav_main"
         android:layout_width="match_parent"
