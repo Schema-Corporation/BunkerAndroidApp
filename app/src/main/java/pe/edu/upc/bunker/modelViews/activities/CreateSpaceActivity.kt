@@ -1,14 +1,10 @@
 package pe.edu.upc.bunker.modelViews.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import pe.edu.upc.bunker.R
-import pe.edu.upc.bunker.modelViews.fragments.CreateSpaceStepOneFragment
-import pe.edu.upc.bunker.modelViews.fragments.HomeFragment
-import pe.edu.upc.bunker.modelViews.fragments.NotificationsFragment
-import pe.edu.upc.bunker.modelViews.fragments.SettingsFragment
+import pe.edu.upc.bunker.modelViews.fragments.CreateSpaceStepTwoFragment2
 
 class CreateSpaceActivity : AppCompatActivity() {
 
@@ -27,6 +23,6 @@ class CreateSpaceActivity : AppCompatActivity() {
     }
 
     private fun fragmentFor() : Fragment {
-        return CreateSpaceStepOneFragment()
+        return CreateSpaceStepTwoFragment2()
     }
 }

@@ -1,13 +1,16 @@
-package pe.edu.upc.bunker.modelViews
+package pe.edu.upc.bunker.modelViews.fragments
 
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -26,7 +29,8 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 import pe.edu.upc.bunker.R
 import java.util.*
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+class CreateSpaceStepTwoFragment2 : Fragment(), OnMapReadyCallback,
+    GoogleMap.OnMarkerClickListener {
     //Defining companion object for the system to request permissions from user when needed
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
@@ -39,21 +43,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private lateinit var nextButton: Button
     private lateinit var backButton: ImageView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_maps)
-        nextButton = findViewById(R.id.step_2_next_button)
-        backButton = findViewById(R.id.back_arrow_image)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view =
+            inflater.inflate(R.layout.fragment_create_space_step_two_fragment2, container, false)
+        nextButton = view.findViewById(R.id.step_2_next_button)
+        backButton = view.findViewById(R.id.back_arrow_image)
         if (!Places.isInitialized()) {
             Places.initialize(
-                applicationContext,
+                this.requireContext(),
                 getString(R.string.google_maps_key),
                 Locale.getDefault()
             )
         }
 
         val autocompleteFragment =
-            supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
+            childFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
 
         autocompleteFragment.setPlaceFields(
             listOf(
@@ -83,10 +91,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         })
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
+        val mapFragment = childFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        fusedLocationClient =
+            LocationServices.getFusedLocationProviderClient(this.requireActivity())
+
+        return super.onCreateView(inflater, container, savedInstanceState)
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -96,12 +108,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         map.setOnMarkerClickListener(this)
 
         if (ActivityCompat.checkSelfPermission(
-                this,
+                this.requireContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
-                this,
+                this.requireActivity(),
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
                 LOCATION_PERMISSION_REQUEST_CODE
             )
@@ -110,7 +122,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         //Allow current position button to be accessible for user
         map.isMyLocationEnabled = true
         //Instancing listener for current position from OS value, updated  when user moves
-        fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
+        fusedLocationClient.lastLocation.addOnSuccessListener(this.requireActivity()) { location ->
             if (location != null) {
                 lastLocation = location
                 val currentLatLng = LatLng(location.latitude, location.longitude)
@@ -124,12 +136,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private fun setUpMap() {
         //Check if permissions for fine location where granted, if not request them
         if (ActivityCompat.checkSelfPermission(
-                this,
+                this.requireContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
-                this,
+                this.requireActivity(),
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
                 LOCATION_PERMISSION_REQUEST_CODE
             )
@@ -138,7 +150,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         //Enable current position button
         map.isMyLocationEnabled = true
         //Listener for current position from OS
-        fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
+        fusedLocationClient.lastLocation.addOnSuccessListener(this.requireActivity()) { location ->
             if (location != null) {
                 lastLocation = location
                 val currentLatLng = LatLng(location.latitude, location.longitude)

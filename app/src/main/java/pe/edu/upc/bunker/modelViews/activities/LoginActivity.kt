@@ -95,7 +95,7 @@ class LoginActivity : AppCompatActivity() {
                                 }
 
                                 val loginIntent =
-                                    Intent(applicationContext, MapsActivity::class.java)
+                                    Intent(applicationContext, NavigationActivity::class.java)
                                 startActivity(loginIntent)
                                 finish()
                             }

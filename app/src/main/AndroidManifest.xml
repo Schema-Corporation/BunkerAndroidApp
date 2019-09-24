@@ -29,18 +29,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".modelViews.MapsActivity"
-            android:label="@string/title_activity_maps">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="pe.edu.upc.bunker.modelViews.NavigationActivity" />
-        </activity>
-        <activity android:name=".modelViews.SignUpActivity" />
-        <activity android:name=".modelViews.NavigationActivity" />
-        <activity android:name=".modelViews.LoginActivity" />
-        <activity android:name=".modelViews.OnBoardingActivity" />
-        <activity android:name=".modelViews.MainActivity">
+        <activity android:name=".modelViews.CreateSpaceStepTwoActivity"></activity>
         <activity android:name=".modelViews.activities.CreateSpaceActivity"></activity>
         <activity android:name=".modelViews.activities.SignUpActivity" />
         <activity android:name=".modelViews.activities.NavigationActivity" />
