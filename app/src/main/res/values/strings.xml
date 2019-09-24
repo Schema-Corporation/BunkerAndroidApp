@@ -14,4 +14,10 @@
     <string name="sign_up_title">Sign-Up</string>
     <string name="cancel_text">Cancel</string>
     <string name="sign_up_text">Sign Up</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="back_action_content_description">Back Action</string>
+    <string name="register_title">Registro</string>
+    <string name="step_2_subtitle">Ubica tu espacio</string>
+    <string name="continue_label">Continuar</string>
+    <string name="step_1_icon_description">Step 1 Icon</string>
 </resources>
