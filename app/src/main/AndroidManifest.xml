@@ -41,6 +41,12 @@
         <activity android:name=".modelViews.LoginActivity" />
         <activity android:name=".modelViews.OnBoardingActivity" />
         <activity android:name=".modelViews.MainActivity">
+        <activity android:name=".modelViews.activities.CreateSpaceActivity"></activity>
+        <activity android:name=".modelViews.activities.SignUpActivity" />
+        <activity android:name=".modelViews.activities.NavigationActivity" />
+        <activity android:name=".modelViews.activities.LoginActivity" />
+        <activity android:name=".modelViews.activities.OnBoardingActivity" />
+        <activity android:name=".modelViews.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

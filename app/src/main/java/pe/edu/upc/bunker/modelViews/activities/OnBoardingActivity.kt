@@ -1,4 +1,4 @@
-package pe.edu.upc.bunker.modelViews
+package pe.edu.upc.bunker.modelViews.activities
 
 import android.content.Context
 import android.content.Intent
@@ -22,7 +22,7 @@ class OnBoardingActivity : AppCompatActivity() {
         startButton.setOnClickListener {
             val sharedPref: SharedPreferences = getSharedPreferences("Flags", Context.MODE_PRIVATE)
             sharedPref.edit().putBoolean("FirstRun",false).apply()
-            val loginIntent = Intent(this,LoginActivity::class.java)
+            val loginIntent = Intent(this, LoginActivity::class.java)
             startActivity(loginIntent)
             finish()
         }
