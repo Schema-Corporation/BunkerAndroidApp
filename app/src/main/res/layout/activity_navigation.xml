@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".modelViews.NavigationActivity">
+    tools:context=".modelViews.activities.NavigationActivity">
 <FrameLayout
     android:id="@+id/flBlank"
     android:layout_width="match_parent"

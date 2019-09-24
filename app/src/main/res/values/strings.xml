@@ -21,4 +21,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home_fragment_text">Home Fragment</string>
     <string name="notifications_fragment_text">Notifications Fragment</string>
+    <string name="create_space_first_message">Medidas de tu espacio</string>
+    <string name="width_label">Ancho:</string>
 </resources>
