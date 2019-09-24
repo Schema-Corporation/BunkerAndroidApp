@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:text="@string/home_fragment_text" />
 
+<<<<<<< Updated upstream
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_space"
         android:layout_width="wrap_content"
@@ -23,4 +24,7 @@
         android:src="@drawable/ic_add_blank_24dp"/>
 
 
+=======
+  
+>>>>>>> Stashed changes
 </FrameLayout>
