@@ -1,4 +1,4 @@
-package pe.edu.upc.bunker.modelViews
+package pe.edu.upc.bunker.modelViews.activities
 
 import android.content.pm.PackageManager
 import android.location.Location

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import pe.edu.upc.bunker.R
-import pe.edu.upc.bunker.modelViews.CreateSpaceStepTwoActivity
+import pe.edu.upc.bunker.modelViews.activities.CreateSpaceStepOneActivity
 
 class HomeFragment : Fragment() {
 
@@ -29,7 +29,7 @@ class HomeFragment : Fragment() {
 
     private fun goToAddSpace(view : View) {
         addSpaceButton.setOnClickListener {
-            view.context.startActivity(Intent(view.context, CreateSpaceStepTwoActivity::class.java))
+            view.context.startActivity(Intent(view.context, CreateSpaceStepOneActivity::class.java))
         }
     }
 
