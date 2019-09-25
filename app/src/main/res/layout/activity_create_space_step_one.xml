@@ -115,12 +115,12 @@
                     android:id="@+id/subtitle_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
                     android:text="@string/subtitle_text_step_one"
-                    android:textSize="16sp"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="15dp"
                     app:layout_constraintTop_toBottomOf="@id/steps_progress_box" />
 
                 <androidx.cardview.widget.CardView
@@ -132,72 +132,151 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/subtitle_text_view">
 
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <TextView
-                            android:id="@+id/width_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+
+                        <ImageView
+                            android:id="@+id/width_icon"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
                             android:layout_marginStart="35dp"
-                            android:layout_marginTop="50dp"
-                            android:text="@string/width_label"
-                            android:textSize="24dp"
-                            android:textStyle="bold"
+                            android:layout_marginTop="27dp"
+                            android:src="@drawable/ic_panorama_horizontal_black_24dp"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
 
-                        <EditText
-                            android:id="@+id/width_edit_text"
-                            android:layout_width="100dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="25dp"
-                            android:layout_marginTop="35dp"
-                            app:layout_constraintStart_toEndOf="@id/width_label"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            ></ImageView>
 
-                        <TextView
-                            android:id="@+id/height_label"
-                            android:layout_width="wrap_content"
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/text_input_width"
+                            android:layout_width="160dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintStart_toEndOf="@id/width_icon"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/input_width_edit_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="2dp"
+                                android:backgroundTint="@color/places_text_white_alpha_26"
+                                android:fontFamily="bold"
+                                android:hint="@string/width_placeholder"
+                                android:inputType="numberSigned"
+                                android:maxLines="1"
+                                android:textSize="16sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <ImageView
+                            android:id="@+id/height_icon"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
                             android:layout_marginStart="35dp"
-                            android:layout_marginTop="30dp"
-                            android:text="@string/height_label"
-                            android:textSize="24dp"
-                            android:textStyle="bold"
+                            android:layout_marginTop="29dp"
+                            android:src="@drawable/ic_panorama_vertical_black_24dp"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/width_label" />
+                            app:layout_constraintTop_toBottomOf="@id/width_icon"
 
-                        <EditText
-                            android:id="@+id/height_edit_text"
-                            android:layout_width="100dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="33dp"
-                            android:layout_marginTop="14dp"
-                            app:layout_constraintStart_toEndOf="@id/height_label"
-                            app:layout_constraintTop_toBottomOf="@id/width_edit_text" />
+                            ></ImageView>
 
-                        <TextView
-                            android:id="@+id/area_label"
-                            android:layout_width="wrap_content"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/text_input_height"
+                            android:layout_width="160dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="35dp"
-                            android:layout_marginTop="30dp"
-                            android:text="@string/area_label"
-                            android:textSize="24dp"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/height_label" />
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintStart_toEndOf="@id/width_icon"
+                            app:layout_constraintTop_toBottomOf="@id/text_input_width">
 
-                        <EditText
-                            android:id="@+id/area_edit_text"
-                            android:layout_width="100dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="33dp"
-                            android:layout_marginTop="14dp"
-                            app:layout_constraintStart_toEndOf="@id/height_label"
-                            app:layout_constraintTop_toBottomOf="@id/height_edit_text" />
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/input_height_edit_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="2dp"
+                                android:backgroundTint="@color/places_text_white_alpha_26"
+                                android:fontFamily="bold"
+                                android:hint="@string/height_placeholder"
+                                android:inputType="numberSigned"
+                                android:maxLines="1"
+                                android:textSize="16sp"
+
+                                />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <ImageView
+                            android:id="@+id/area_icon"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="35dp"
+                            android:layout_marginTop="29dp"
+                            android:src="@drawable/ic_dashboard_black_24dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/height_icon"
+
+                            ></ImageView>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/text_input_area"
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintStart_toEndOf="@id/height_icon"
+                            app:layout_constraintTop_toBottomOf="@id/text_input_height">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/input_area_edit_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="2dp"
+                                android:backgroundTint="@color/places_text_white_alpha_26"
+                                android:fontFamily="bold"
+                                android:hint="@string/area_placeholder"
+                                android:inputType="numberSigned"
+                                android:maxLines="1"
+                                android:textSize="16sp"
+
+                                />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <ImageView
+                            android:id="@+id/space_type_icon"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="35dp"
+                            android:layout_marginTop="29dp"
+                            android:src="@drawable/ic_business_black_24dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/area_icon"
+
+                            ></ImageView>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintStart_toEndOf="@id/area_icon"
+                            app:layout_constraintTop_toBottomOf="@id/text_input_area">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/space_type_dropdown"
+                                android:editable="false"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:backgroundTint="@color/places_text_white_alpha_26"
+                                android:layout_marginTop="25dp"/>
+
+
+                        </com.google.android.material.textfield.TextInputLayout>
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -205,16 +284,90 @@
 
                 </androidx.cardview.widget.CardView>
 
+                <TextView
+                    android:id="@+id/subtitle_text_two_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/subtitle_text_two_step_one"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/first_cardView" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_title"
+                    android:layout_width="330dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/subtitle_text_two_view">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_title_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@color/places_text_white_alpha_26"
+                        android:fontFamily="bold"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textSize="16sp"
+
+
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:id="@+id/subtitle_text_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/subtitle_text_description_step_one"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_input_title" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_description"
+                    android:layout_width="330dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/subtitle_text_description">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_description_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@color/places_text_white_alpha_26"
+                        android:fontFamily="bold"
+                        android:minLines="4"
+                        android:inputType="textMultiLine"
+                        android:lines="4"
+                        android:textSize="16sp"
+
+
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/step_2_next_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="18dp"
+                    android:layout_marginTop="30dp"
                     android:text="@string/continue_label"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/first_cardView" />
+                    android:layout_marginBottom="20dp"
+                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
