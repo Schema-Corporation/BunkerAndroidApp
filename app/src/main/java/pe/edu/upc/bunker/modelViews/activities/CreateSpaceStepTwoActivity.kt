@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.common.api.Status
@@ -52,6 +53,10 @@ class CreateSpaceStepTwoActivity : AppCompatActivity(), OnMapReadyCallback,
                 Locale.getDefault()
             )
         }
+
+        var bundle :Bundle ?=intent.extras
+        var message = bundle!!.getInt("spaceType") // 1
+        Log.d("spaceType: ", message.toString())
 
         val autocompleteFragment =
             supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
