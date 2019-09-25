@@ -29,4 +29,7 @@
     <string name="notifications_fragment_text">Notifications Fragment</string>
     <string name="create_space_first_message">Medidas de tu espacio</string>
     <string name="width_label">Ancho:</string>
+    <string name="subtitle_text_step_one">Medidas de tu espacio</string>
+    <string name="height_label">Largo :</string>
+    <string name="area_label">Area :</string>
 </resources>
