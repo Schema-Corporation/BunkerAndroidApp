@@ -24,7 +24,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="256dp"
-        android:layout_height="256dp"
+        android:layout_height="wrap_content"
         android:contentDescription="@string/company_logo_description"
         android:src="@drawable/logo_bunker"
         android:layout_marginTop="32dp"/>
