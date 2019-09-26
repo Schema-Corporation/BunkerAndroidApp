@@ -6,6 +6,10 @@
     tools:context=".modelViews.fragments.HomeFragment"
     android:id="@+id/home_fragment">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

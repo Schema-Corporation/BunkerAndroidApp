@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/spaces_card_view_item"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/spaces_image_view_item"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="32dp"
+                android:layout_marginStart="24dp" />
+
+            <TextView
+                android:id="@+id/spaces_title_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/spaces_image_view_item"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:textSize="16sp"
+                android:textColor="@color/design_default_color_on_secondary"/>
+
+            <TextView
+                android:id="@+id/spaces_address_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/spaces_image_view_item"
+                app:layout_constraintTop_toBottomOf="@id/spaces_title_item"
+                android:textSize="14sp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/text_color_secondary"
+                android:layout_marginStart="16dp"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/disable_space_button_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spaces_image_view_item"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/details_space_button_item"
+                app:icon="@drawable/ic_cancel_button_16dp"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="@color/quantum_googred"
+                android:layout_marginBottom="4dp"
+                android:text="@string/disable_label_button"
+                />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/details_space_button_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/disable_space_button_item"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spaces_image_view_item"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:icon="@drawable/ic_view_space_button_16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="4dp"
+                android:backgroundTint="@color/quantum_googgreen"
+                android:text="@string/details_label_button"
+            />
+
+
+            <TextView
+                android:id="@+id/space_status_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/quantum_lightgreen"
+                android:text="@string/status_default_available_label"
+                />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                app:layout_constraintEnd_toStartOf="@id/space_status_item"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_star_available_12dp"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,4 +37,7 @@
     <string name="area_placeholder">Área</string>
     <string name="subtitle_text_two_step_one">Título para tu espacio</string>
     <string name="subtitle_text_description_step_one">Descripción</string>
+    <string name="disable_label_button">Deshabilitar</string>
+    <string name="details_label_button">Ver Espacio</string>
+    <string name="status_default_available_label">Disponible</string>
 </resources>
