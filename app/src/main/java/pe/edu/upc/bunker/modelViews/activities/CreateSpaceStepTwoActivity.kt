@@ -1,5 +1,6 @@
 package pe.edu.upc.bunker.modelViews.activities
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -108,12 +109,12 @@ class CreateSpaceStepTwoActivity : AppCompatActivity(), OnMapReadyCallback,
 
         if (ActivityCompat.checkSelfPermission(
                 this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 LOCATION_PERMISSION_REQUEST_CODE
             )
             return
@@ -165,5 +166,25 @@ class CreateSpaceStepTwoActivity : AppCompatActivity(), OnMapReadyCallback,
         //Adds address information to marker
         markerOptions.title(address)
         map.addMarker(markerOptions)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>, grantResults: IntArray
+    ) {
+        when (requestCode) {
+            LOCATION_PERMISSION_REQUEST_CODE -> {
+                // If request is cancelled, the result arrays are empty.
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    finish()
+                    overridePendingTransition(0, 0)
+                    startActivity(intent)
+                    overridePendingTransition(0, 0)
+                } else {
+                    startActivity(Intent(this, NavigationActivity::class.java))
+                }
+                return
+            }
+        }
     }
 }
