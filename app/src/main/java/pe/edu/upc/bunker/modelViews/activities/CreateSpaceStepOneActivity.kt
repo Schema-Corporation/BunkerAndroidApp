@@ -7,11 +7,13 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.android.synthetic.main.fragment_home.*
 import pe.edu.upc.bunker.R
 
 class CreateSpaceStepOneActivity : AppCompatActivity() {
 
     private lateinit var nextStepButton : Button
+
 
     private lateinit var widthEditText : TextInputEditText
     private lateinit var heightEditText : TextInputEditText
@@ -35,7 +37,10 @@ class CreateSpaceStepOneActivity : AppCompatActivity() {
 
         nextStepButton = findViewById(R.id.step_2_next_button)
         pressNextStepButton()
-        
+
+
+
+
     }
 
     private fun pressNextStepButton() {
@@ -46,6 +51,7 @@ class CreateSpaceStepOneActivity : AppCompatActivity() {
             finish()
         }
     }
+
 
     private fun getDataFromForm(nextStepIntent : Intent) {
         widthEditText = findViewById(R.id.input_width_edit_text)

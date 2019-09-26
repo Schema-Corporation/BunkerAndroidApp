@@ -41,4 +41,5 @@
     <string name="details_label_button">Ver Espacio</string>
     <string name="status_default_available_label">Disponible</string>
     <string name="preview_image_content_description">Vista Previa de la foto del espacio</string>
+    <string name="subtitle_text_step_four">Servicios de tu espacio</string>
 </resources>

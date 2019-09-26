@@ -48,6 +48,8 @@
         </com.google.android.material.card.MaterialCardView>
 
 
+
+
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -118,7 +120,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
                     android:text="@string/subtitle_text_step_one"
-                    android:textSize="22sp"
+                    android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/steps_progress_box" />
@@ -127,7 +129,7 @@
                     android:id="@+id/first_cardView"
                     android:layout_width="310dp"
                     android:layout_height="280dp"
-                    android:layout_marginStart="50dp"
+                    android:layout_marginStart="40dp"
                     android:layout_marginTop="25dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/subtitle_text_view">
@@ -273,7 +275,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:backgroundTint="@color/places_text_white_alpha_26"
-                                android:layout_marginTop="25dp"/>
+                                android:layout_marginTop="18dp"/>
 
 
                         </com.google.android.material.textfield.TextInputLayout>
