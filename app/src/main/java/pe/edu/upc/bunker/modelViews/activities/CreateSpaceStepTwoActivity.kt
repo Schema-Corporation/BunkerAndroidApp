@@ -1,12 +1,12 @@
 package pe.edu.upc.bunker.modelViews.activities
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.common.api.Status
@@ -93,6 +93,11 @@ class CreateSpaceStepTwoActivity : AppCompatActivity(), OnMapReadyCallback,
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        nextButton.setOnClickListener {
+            startActivity(Intent(this, CreateSpaceStepThreeActivity::class.java))
+            finish()
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
