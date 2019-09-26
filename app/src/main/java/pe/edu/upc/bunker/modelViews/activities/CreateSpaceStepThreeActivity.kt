@@ -3,8 +3,10 @@ package pe.edu.upc.bunker.modelViews.activities
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
-import android.os.Environment
+import android.view.View
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -14,13 +16,11 @@ import io.fotoapparat.configuration.CameraConfiguration
 import io.fotoapparat.log.logcat
 import io.fotoapparat.log.loggers
 import io.fotoapparat.parameter.ScaleType
-import io.fotoapparat.selector.back
-import io.fotoapparat.selector.front
-import io.fotoapparat.selector.off
-import io.fotoapparat.selector.torch
+import io.fotoapparat.selector.*
 import io.fotoapparat.view.CameraView
 import pe.edu.upc.bunker.R
-import java.io.File
+import kotlin.math.min
+
 
 class CreateSpaceStepThreeActivity : AppCompatActivity() {
     private val permissions = arrayOf(
@@ -31,11 +31,8 @@ class CreateSpaceStepThreeActivity : AppCompatActivity() {
     private lateinit var fabCamera: FloatingActionButton
     private lateinit var fabSwitchCamera: FloatingActionButton
     private lateinit var fabFlash: FloatingActionButton
+    private lateinit var previewImageButton: ImageButton
     private var fotoapparat: Fotoapparat? = null
-
-    private val filename = "test.png"
-    private val sd = Environment.getExternalStorageDirectory().absolutePath
-    private val dest = File(sd, filename)
 
     private var fotoapparatState: FotoapparatState? = null
     private var cameraStatus: CameraState? = null
@@ -47,6 +44,7 @@ class CreateSpaceStepThreeActivity : AppCompatActivity() {
         fabCamera = findViewById(R.id.fab_camera)
         fabSwitchCamera = findViewById(R.id.fab_switch_camera)
         fabFlash = findViewById(R.id.fab_flash)
+        previewImageButton = findViewById(R.id.preview_photo_image_button_view)
 
         createFotoapparat()
 
@@ -69,8 +67,77 @@ class CreateSpaceStepThreeActivity : AppCompatActivity() {
             requestPermission()
         } else {
             fotoapparat
-                ?.takePicture()?.saveToFile(dest)
+                ?.takePicture()?.toBitmap()?.whenAvailable {
+                    val photoThumbnail = scalePhoto(it!!.bitmap)
+                    previewImageButton.setImageBitmap(photoThumbnail)
+                    previewImageButton.visibility = View.VISIBLE
+                    previewImageButton.rotation = -it.rotationDegrees.toFloat()
+                }
         }
+    }
+
+    private fun scalePhoto(bitmap: Bitmap): Bitmap {
+        var photoBm = bitmap
+        val bmOriginalWidth = photoBm.width
+        val bmOriginalHeight = photoBm.height
+        val originalWidthToHeightRatio = 1.0 * bmOriginalWidth / bmOriginalHeight
+        val originalHeightToWidthRatio = 1.0 * bmOriginalHeight / bmOriginalWidth
+        val maxHeight = 360
+        val maxWidth = 360
+        photoBm = getScaledBitmap(
+            photoBm, bmOriginalWidth, bmOriginalHeight,
+            originalWidthToHeightRatio, originalHeightToWidthRatio,
+            maxHeight, maxWidth
+        )
+        return photoBm
+    }
+
+    private fun getScaledBitmap(
+        bm: Bitmap,
+        bmOriginalWidth: Int,
+        bmOriginalHeight: Int,
+        originalWidthToHeightRatio: Double,
+        originalHeightToWidthRatio: Double,
+        maxHeight: Int,
+        maxWidth: Int
+    ): Bitmap {
+        var modifiableBM = bm
+        if (bmOriginalWidth > maxWidth || bmOriginalHeight > maxHeight) {
+            modifiableBM = if (bmOriginalWidth > bmOriginalHeight) {
+                scaleDeminsFromWidth(bm, maxWidth, bmOriginalHeight, originalHeightToWidthRatio)
+            } else {
+                scaleDeminsFromHeight(
+                    bm,
+                    maxHeight,
+                    bmOriginalHeight,
+                    originalWidthToHeightRatio
+                )
+            }
+        }
+        return modifiableBM
+    }
+
+    private fun scaleDeminsFromHeight(
+        bm: Bitmap,
+        maxHeight: Int,
+        bmOriginalHeight: Int,
+        originalWidthToHeightRatio: Double
+    ): Bitmap {
+        val newHeight = min(maxHeight.toDouble(), bmOriginalHeight * .55).toInt()
+        val newWidth = (newHeight * originalWidthToHeightRatio).toInt()
+        return Bitmap.createScaledBitmap(bm, newWidth, newHeight, true)
+    }
+
+    private fun scaleDeminsFromWidth(
+        bm: Bitmap,
+        maxWidth: Int,
+        bmOriginalWidth: Int,
+        originalHeightToWidthRatio: Double
+    ): Bitmap {
+        //scale the width
+        val newWidth = min(maxWidth.toDouble(), bmOriginalWidth * .75).toInt()
+        val newHeight = (newWidth * originalHeightToWidthRatio).toInt()
+        return Bitmap.createScaledBitmap(bm, newWidth, newHeight, true)
     }
 
     private fun pressedSwitchCamera() {
@@ -112,11 +179,37 @@ class CreateSpaceStepThreeActivity : AppCompatActivity() {
     private fun createFotoapparat() {
         val cameraView = findViewById<CameraView>(R.id.camera_view)
 
+        val cameraConfiguration = CameraConfiguration(
+            pictureResolution = highestResolution(),
+            previewResolution = highestResolution(),
+            previewFpsRange = highestFps(),
+            focusMode = firstAvailable(
+                continuousFocusPicture(),
+                autoFocus(),
+                fixed()
+            ),
+            flashMode = firstAvailable(
+                autoRedEye(),
+                autoFlash(),
+                torch(),
+                off()
+            ),
+            antiBandingMode = firstAvailable(
+                auto(),
+                hz50(),
+                hz60(),
+                none()
+            ),
+            jpegQuality = manualJpegQuality(100),
+            sensorSensitivity = lowestSensorSensitivity()
+        )
+
         fotoapparat = Fotoapparat(
             context = this,
             view = cameraView,
             scaleType = ScaleType.CenterCrop,
             lensPosition = back(),
+            cameraConfiguration = cameraConfiguration,
             logger = loggers(
                 logcat()
             ),
@@ -124,6 +217,7 @@ class CreateSpaceStepThreeActivity : AppCompatActivity() {
                 println("Recorder errors: $error")
             }
         )
+
     }
 
     override fun onStop() {

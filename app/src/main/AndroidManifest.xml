@@ -23,7 +23,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".modelViews.activities.CreateSpaceStepThreeActivity"></activity>
+        <activity
+            android:name=".modelViews.activities.CreateSpaceStepThreeActivity"
+            android:screenOrientation="portrait"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -36,13 +38,27 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".modelViews.activities.CreateSpaceStepTwoActivity"></activity>
-        <activity android:name=".modelViews.activities.CreateSpaceStepOneActivity"></activity>
-        <activity android:name=".modelViews.activities.SignUpActivity" />
-        <activity android:name=".modelViews.activities.NavigationActivity" />
-        <activity android:name=".modelViews.activities.LoginActivity" />
-        <activity android:name=".modelViews.activities.OnBoardingActivity" />
-        <activity android:name=".modelViews.activities.MainActivity">
+        <activity
+            android:name=".modelViews.activities.CreateSpaceStepTwoActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".modelViews.activities.CreateSpaceStepOneActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".modelViews.activities.SignUpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modelViews.activities.NavigationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modelViews.activities.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modelViews.activities.OnBoardingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modelViews.activities.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
