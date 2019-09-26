@@ -92,6 +92,7 @@
                 />
 
             <ImageView
+                android:id="@+id/space_status_icon_item"
                 android:layout_width="12dp"
                 android:layout_height="12dp"
                 app:layout_constraintEnd_toStartOf="@id/space_status_item"
