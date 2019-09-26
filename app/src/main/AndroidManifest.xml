@@ -60,7 +60,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".modelViews.activities.MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" />
         <activity android:name=".modelViews.activities.CreateSpaceStepTwoActivity" />
         <activity android:name=".modelViews.activities.CreateSpaceStepOneActivity" />
         <activity android:name=".modelViews.activities.SignUpActivity" />
