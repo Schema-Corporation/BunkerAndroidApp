@@ -87,7 +87,7 @@ class LoginActivity : AppCompatActivity() {
                                 val token = lstToken[1]
                                 Log.d("Debug", "Token: $token")
                                 val sharedPref =
-                                    this@LoginActivity.getPreferences(Context.MODE_PRIVATE)
+                                    this@LoginActivity.getSharedPreferences("Login", Context.MODE_PRIVATE)
                                         ?: return
                                 with(sharedPref.edit()) {
                                     putString("Token", token)
