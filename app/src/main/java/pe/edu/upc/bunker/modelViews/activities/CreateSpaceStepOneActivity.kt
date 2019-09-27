@@ -46,6 +46,7 @@ class CreateSpaceStepOneActivity : AppCompatActivity() {
 
     private fun pressNextStepButton() {
         nextStepButton.setOnClickListener {
+<<<<<<< Updated upstream
 
             val width = widthEditText.text.toString()
             if (width.isNullOrEmpty()) {
@@ -89,6 +90,12 @@ class CreateSpaceStepOneActivity : AppCompatActivity() {
                 startActivity(nextStepIntent)
                 finish()
             }
+=======
+            val nextStepIntent = Intent(applicationContext, CreateSpaceStepFourActivity::class.java)
+            getDataFromForm(nextStepIntent)
+            startActivity(nextStepIntent)
+            finish()
+>>>>>>> Stashed changes
         }
     }
 
