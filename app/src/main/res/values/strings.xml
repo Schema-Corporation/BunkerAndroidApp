@@ -42,4 +42,6 @@
     <string name="status_default_available_label">Disponible</string>
     <string name="preview_image_content_description">Vista Previa de la foto del espacio</string>
     <string name="subtitle_text_step_four">Servicios de tu espacio</string>
+    <string name="step_3_subtitle">Fotos de tu espacio</string>
+    <string name="space_photo_create_description">Photo of Space</string>
 </resources>

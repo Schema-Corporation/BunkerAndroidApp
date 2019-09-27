@@ -96,7 +96,7 @@ class CreateSpaceStepTwoActivity : AppCompatActivity(), OnMapReadyCallback,
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         nextButton.setOnClickListener {
-            startActivity(Intent(this, CreateSpaceStepThreeActivity::class.java))
+            startActivity(Intent(this, CreateSpaceStepThreeDot1Activity::class.java))
             finish()
         }
     }
