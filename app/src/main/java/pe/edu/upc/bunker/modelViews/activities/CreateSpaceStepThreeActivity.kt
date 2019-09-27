@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
@@ -37,6 +38,12 @@ class CreateSpaceStepThreeActivity : AppCompatActivity() {
     private var fotoapparatState: FotoapparatState? = null
     private var cameraStatus: CameraState? = null
     private var flashState: FlashState? = null
+
+    private var bitmapThumbnail: Bitmap? = null
+    private var bitmapOriginal: Bitmap? = null
+    private var rotationDegree: Float? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_space_step_three)
@@ -54,8 +61,20 @@ class CreateSpaceStepThreeActivity : AppCompatActivity() {
         pressedShoot()
         pressedSwitchCamera()
         pressedFlash()
-    }
 
+        previewImageButton.setOnClickListener {
+            Log.d("CameraDebug", "previewButton Pressed")
+            val intent = Intent(this, CreateSpaceStepThreeDot1Activity::class.java)
+            Log.d("CameraDebug", "photoThumbnail saved")
+            intent.putExtra("photoThumbnail", bitmapThumbnail)
+            //Log.d("CameraDebug", "photoOriginal saved")
+            //intent.putExtra("photoOriginal", bitmapOriginal)
+            Log.d("CameraDebug", "rotation saved")
+            intent.putExtra("rotationDegree", rotationDegree)
+            setResult(RESULT_OK, intent)
+            finish()
+        }
+    }
     private fun pressedShoot() {
         fabCamera.setOnClickListener {
             takePhoto()
@@ -68,26 +87,33 @@ class CreateSpaceStepThreeActivity : AppCompatActivity() {
         } else {
             fotoapparat
                 ?.takePicture()?.toBitmap()?.whenAvailable {
-                    val photoThumbnail = scalePhoto(it!!.bitmap)
+                    Log.d("CameraDebug", "Scaling thumbnail")
+                    val photoThumbnail = scalePhoto(it!!.bitmap, 360, 360)
+                    Log.d("CameraDebug", "Scaling original photo")
+
                     previewImageButton.setImageBitmap(photoThumbnail)
                     previewImageButton.visibility = View.VISIBLE
                     previewImageButton.rotation = -it.rotationDegrees.toFloat()
+
+                    rotationDegree = -it.rotationDegrees.toFloat()
+                    bitmapThumbnail = photoThumbnail
+                    bitmapOriginal = it.bitmap
                 }
         }
     }
 
-    private fun scalePhoto(bitmap: Bitmap): Bitmap {
+    private fun scalePhoto(bitmap: Bitmap, maxHeight: Int, maxWidth: Int): Bitmap {
         var photoBm = bitmap
         val bmOriginalWidth = photoBm.width
         val bmOriginalHeight = photoBm.height
         val originalWidthToHeightRatio = 1.0 * bmOriginalWidth / bmOriginalHeight
         val originalHeightToWidthRatio = 1.0 * bmOriginalHeight / bmOriginalWidth
-        val maxHeight = 360
-        val maxWidth = 360
+        val maxHeight1 = maxHeight
+        val maxWidth1 = maxWidth
         photoBm = getScaledBitmap(
             photoBm, bmOriginalWidth, bmOriginalHeight,
             originalWidthToHeightRatio, originalHeightToWidthRatio,
-            maxHeight, maxWidth
+            maxHeight1, maxWidth1
         )
         return photoBm
     }

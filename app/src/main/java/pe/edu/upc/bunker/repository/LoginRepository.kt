@@ -3,6 +3,8 @@ package pe.edu.upc.bunker.repository
 import pe.edu.upc.bunker.dto.LoginDTO
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface LoginRepository {
@@ -12,4 +14,7 @@ interface LoginRepository {
 
     @POST("signup")
     fun signUp(@Body signUp: LoginDTO): Call<Void>
+
+    @DELETE("logout")
+    fun logout(@Header("Authorization") authorization: String): Call<Void>
 }
