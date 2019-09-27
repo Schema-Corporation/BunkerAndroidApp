@@ -1,20 +1,30 @@
 package pe.edu.upc.bunker.modelViews.adapters
 
+import android.content.Intent
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import pe.edu.upc.bunker.R
+import pe.edu.upc.bunker.modelViews.activities.SpaceDetailsActivity
 import pe.edu.upc.bunker.models.Space
 
 class SpacesAdapter (var list: List<Space>): RecyclerView.Adapter<SpacesViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpacesViewHolder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.spaces_recycler_view_view_holder, parent, false)
+        return SpacesViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return list.size
     }
 
     override fun onBindViewHolder(holder: SpacesViewHolder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        holder.spaceTitleTextView.text = list[position].title
+
+        holder.spaceDetailsButton.setOnClickListener{
+            val context = it.context
+            context.startActivity(Intent(context, SpaceDetailsActivity::class.java))
+        }
     }
 
 }

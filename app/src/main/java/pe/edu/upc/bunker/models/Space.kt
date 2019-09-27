@@ -15,5 +15,9 @@ data class Space(
     val status: Int,
     @SerializedName("updated_at")
     val updatedAt: String,
-    val width: Int
+    val width: Int,
+    val title: String,
+    val description: String,
+    @SerializedName("space_type")
+    val spaceType: Int
 )
