@@ -55,7 +55,7 @@ class HomeFragment : Fragment() {
             }
         })
         */
-        
+
 
         goToAddSpace(view)
 
