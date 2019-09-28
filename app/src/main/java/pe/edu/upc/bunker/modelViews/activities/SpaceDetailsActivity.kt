@@ -1,7 +1,8 @@
 package pe.edu.upc.bunker.modelViews.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import pe.edu.upc.bunker.R
 
 class SpaceDetailsActivity : AppCompatActivity() {
 

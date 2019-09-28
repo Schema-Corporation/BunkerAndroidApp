@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import pe.edu.upc.bunker.R
+import pe.edu.upc.bunker.dbHelper.BunkerDBHelper
 
 
 class CreateSpaceStepThreeDot1Activity : AppCompatActivity() {
@@ -95,6 +97,16 @@ class CreateSpaceStepThreeDot1Activity : AppCompatActivity() {
             intent.putExtra("photoThumbnail", bitmapThumbnail)
             intent.putExtra("photoOriginal", bitmapOriginal)
             startActivityForResult(intent, 1)
+        }
+        nextButton.setOnClickListener {
+            val dbHandler = BunkerDBHelper(this, null)
+            val cursor = dbHandler.getAllSpaces()
+            cursor!!.moveToFirst()
+            if (cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO1)).isNullOrEmpty()) {
+                Snackbar.make(nextButton, "Por favor tome una fotografía", Snackbar.LENGTH_SHORT)
+                    .show()
+            }
+            startActivity(Intent(this, CreateSpaceStepFourActivity::class.java))
         }
     }
 

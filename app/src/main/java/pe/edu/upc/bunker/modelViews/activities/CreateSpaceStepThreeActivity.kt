@@ -20,6 +20,8 @@ import io.fotoapparat.parameter.ScaleType
 import io.fotoapparat.selector.*
 import io.fotoapparat.view.CameraView
 import pe.edu.upc.bunker.R
+import pe.edu.upc.bunker.dbHelper.BunkerDBHelper
+import java.io.ByteArrayOutputStream
 import kotlin.math.min
 
 
@@ -42,7 +44,6 @@ class CreateSpaceStepThreeActivity : AppCompatActivity() {
     private var bitmapThumbnail: Bitmap? = null
     private var bitmapOriginal: Bitmap? = null
     private var rotationDegree: Float? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +72,47 @@ class CreateSpaceStepThreeActivity : AppCompatActivity() {
             //intent.putExtra("photoOriginal", bitmapOriginal)
             Log.d("CameraDebug", "rotation saved")
             intent.putExtra("rotationDegree", rotationDegree)
+            val dbHandler = BunkerDBHelper(this, null)
+            val cursor = dbHandler.getAllSpaces()
+            cursor!!.moveToFirst()
+            val bos = ByteArrayOutputStream()
+            bitmapOriginal?.compress(Bitmap.CompressFormat.JPEG, 100, bos)
+            val img = bos.toByteArray()
+
+            when {
+                String(
+                    cursor.getBlob(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO1)),
+                    charset("UTF-8")
+                ).isEmpty()
+                -> dbHandler.addFirstPhoto(img)
+                String(
+                    cursor.getBlob(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO2)),
+                    charset("UTF-8")
+                ).isEmpty()
+                -> dbHandler.addSecondPhoto(img)
+                String(
+                    cursor.getBlob(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO3)),
+                    charset("UTF-8")
+                ).isEmpty()
+                -> dbHandler.addThirdPhoto(img)
+                String(
+                    cursor.getBlob(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO4)),
+                    charset("UTF-8")
+                ).isEmpty()
+                -> dbHandler.addFourthPhoto(img)
+                String(
+                    cursor.getBlob(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO5)),
+                    charset("UTF-8")
+                ).isEmpty()
+                -> dbHandler.addFifthPhoto(img)
+                String(
+                    cursor.getBlob(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO6)),
+                    charset("UTF-8")
+                ).isEmpty()
+                -> dbHandler.addSixthPhoto(img)
+            }
+            cursor.close()
+
             setResult(RESULT_OK, intent)
             finish()
         }

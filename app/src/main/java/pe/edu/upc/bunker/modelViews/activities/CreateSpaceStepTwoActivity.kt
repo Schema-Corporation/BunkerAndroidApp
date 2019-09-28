@@ -25,7 +25,9 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.RectangularBounds
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import com.google.android.material.snackbar.Snackbar
 import pe.edu.upc.bunker.R
+import pe.edu.upc.bunker.dbHelper.BunkerDBHelper
 import java.util.*
 
 class CreateSpaceStepTwoActivity : AppCompatActivity(), OnMapReadyCallback,
@@ -42,6 +44,9 @@ class CreateSpaceStepTwoActivity : AppCompatActivity(), OnMapReadyCallback,
     private lateinit var nextButton: Button
     private lateinit var backButton: ImageView
 
+    private var spaceLat: Double = 0.0
+    private var spaceLng: Double = 0.0
+    private var spaceAddress: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_create_space_step_two)
@@ -54,11 +59,6 @@ class CreateSpaceStepTwoActivity : AppCompatActivity(), OnMapReadyCallback,
                 Locale.getDefault()
             )
         }
-
-        var bundle :Bundle ?=intent.extras
-        var message = bundle!!.getInt("spaceType") // 1
-        Log.d("spaceType: ", message.toString())
-
         val autocompleteFragment =
             supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
 
@@ -81,6 +81,9 @@ class CreateSpaceStepTwoActivity : AppCompatActivity(), OnMapReadyCallback,
 
                 Log.i("Maps", "Place: " + place.name + ", " + place.id)
                 placeMarkerOnMap(place.latLng!!, place.address!!)
+                spaceAddress = place.address!!
+                spaceLat = place.latLng!!.latitude
+                spaceLng = place.latLng!!.longitude
             }
 
             override fun onError(status: Status) {
@@ -96,8 +99,22 @@ class CreateSpaceStepTwoActivity : AppCompatActivity(), OnMapReadyCallback,
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         nextButton.setOnClickListener {
-            startActivity(Intent(this, CreateSpaceStepThreeDot1Activity::class.java))
-            finish()
+            if (spaceAddress.isNotBlank()) {
+                val dbHandler = BunkerDBHelper(this, null)
+                dbHandler.addSecondStep(
+                    address = spaceAddress,
+                    latitude = spaceLat,
+                    longitude = spaceLng
+                )
+                startActivity(Intent(this, CreateSpaceStepThreeDot1Activity::class.java))
+                finish()
+            } else {
+                Snackbar.make(
+                    nextButton,
+                    "Por favor seleccione la dirección de su espacio",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
@@ -166,6 +183,7 @@ class CreateSpaceStepTwoActivity : AppCompatActivity(), OnMapReadyCallback,
         //Adds address information to marker
         markerOptions.title(address)
         map.addMarker(markerOptions)
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 12f))
     }
 
     override fun onRequestPermissionsResult(
