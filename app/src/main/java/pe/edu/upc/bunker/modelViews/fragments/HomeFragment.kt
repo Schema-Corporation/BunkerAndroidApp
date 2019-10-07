@@ -3,7 +3,6 @@ package pe.edu.upc.bunker.modelViews.fragments
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import pe.edu.upc.bunker.R
 import pe.edu.upc.bunker.dto.SpaceDTO
 import pe.edu.upc.bunker.modelViews.activities.CreateSpaceStepOneActivity
-import pe.edu.upc.bunker.modelViews.activities.NavigationActivity
 import pe.edu.upc.bunker.modelViews.adapters.SpacesAdapter
 import pe.edu.upc.bunker.repository.RetrofitClientInstance
 import pe.edu.upc.bunker.repository.SpacesRepository
@@ -71,18 +69,17 @@ class HomeFragment : Fragment() {
 
         val bearerToken = "Bearer $token"
 
-        spacesRepo.getSpacesByLessorId(lessorId, bearerToken!!).enqueue(object : Callback<List<SpaceDTO>> {
+        spacesRepo.getSpacesByLessorId(lessorId, bearerToken)
+            .enqueue(object : Callback<List<SpaceDTO>> {
             override fun onFailure(call: Call<List<SpaceDTO>>, t: Throwable) {
                 Toast.makeText(activity, "Log FAILED", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<List<SpaceDTO>>, response: Response<List<SpaceDTO>>) {
-                val request = call.request()
-                Log.d("request", call.request().toString())
                 val body = response.body()
 
                 if (body!!.isNotEmpty()) {
-                    listSpacesInfo = body!!
+                    listSpacesInfo = body
 
                     spacesAdapter = SpacesAdapter(listSpacesInfo)
 

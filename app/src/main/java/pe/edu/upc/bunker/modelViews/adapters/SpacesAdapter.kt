@@ -23,7 +23,7 @@ class SpacesAdapter (var list: List<SpaceDTO>): RecyclerView.Adapter<SpacesViewH
     override fun onBindViewHolder(holder: SpacesViewHolder, position: Int) {
         holder.spaceTitleTextView.text = list[position].title
         holder.spaceAddressTextView.text = list[position].address
-        Picasso.get().load(list[position].firstPhoto).into(holder.spacePhotoImageView)
+        Picasso.get().load(list[position].firstPhoto).fit().into(holder.spacePhotoImageView)
 
         val spaceId = list[position].id
 
@@ -31,11 +31,8 @@ class SpacesAdapter (var list: List<SpaceDTO>): RecyclerView.Adapter<SpacesViewH
             val context = it.context
             context.startActivity(Intent(context, SpaceDetailsActivity::class.java))
         }
-
         val sharedPreferences = holder.itemView.context.getSharedPreferences("bunkerPreferences",Context.MODE_PRIVATE)
         val token = sharedPreferences.getString("Token","Test")
-
-
 
     }
 }
