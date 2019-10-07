@@ -1,26 +1,34 @@
 package pe.edu.upc.bunker.dto
 
+
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import pe.edu.upc.bunker.models.Lessor
-import java.io.Serializable
 
-class SpaceDTO : Serializable {
+data class SpaceDTO(
     @Expose
-    var area: Int ?= null
-    @SerializedName("created_at")
-    val createdAt: String?= null
-    val height: Int = 0
-    val id: Int = 0
-    val lessor: Lessor? = null
+    val address: String,
+
+    @Expose
+    val description: String,
+
+    @SerializedName("first_photo")
+    @Expose
+    val firstPhoto: String,
+
+    @Expose
+    val id: Int,
+
     @SerializedName("rent_price")
-    val rentPrice: Double = 0.0
-    val status: Int = 0
-    @SerializedName("updated_at")
-    val updatedAt: String? = null
-    val width: Int = 0
-    val title: String? = null
-    val description: String? = null
+    @Expose
+    val rentPrice: Double,
+
     @SerializedName("space_type")
-    val spaceType: Int = 0
-}
+    @Expose
+    val spaceType: Int,
+
+    @Expose
+    val status: Int,
+
+    @Expose
+    val title: String
+)

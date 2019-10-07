@@ -1,34 +1,42 @@
 package pe.edu.upc.bunker.modelViews.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import pe.edu.upc.bunker.R
 import pe.edu.upc.bunker.dto.SpaceDTO
 import pe.edu.upc.bunker.modelViews.activities.CreateSpaceStepOneActivity
+import pe.edu.upc.bunker.modelViews.activities.NavigationActivity
 import pe.edu.upc.bunker.modelViews.adapters.SpacesAdapter
-import pe.edu.upc.bunker.modelViews.adapters.SpacesViewHolder
-import pe.edu.upc.bunker.models.Location
-import pe.edu.upc.bunker.repository.LocationRepository
 import pe.edu.upc.bunker.repository.RetrofitClientInstance
 import pe.edu.upc.bunker.repository.SpacesRepository
+import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.Response
 
 class HomeFragment : Fragment() {
 
     private lateinit var addSpaceButton : FloatingActionButton
 
+    private lateinit var listSpacesInfo : List<SpaceDTO>
+
     private lateinit var spacesRecyclerView: RecyclerView
+
     private lateinit var spacesAdapter: RecyclerView.Adapter<*>
-    private lateinit var spacesViewHolder: RecyclerView.ViewHolder
+    private lateinit var spacesLayoutManager: RecyclerView.LayoutManager
+
+    //private lateinit var spacesViewHolder: RecyclerView.ViewHolder
 
     val spacesRepo = RetrofitClientInstance().getRetrofitInstance().create(SpacesRepository::class.java)
-    val locationRepo = RetrofitClientInstance().getRetrofitInstance().create(LocationRepository::class.java)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,21 +49,9 @@ class HomeFragment : Fragment() {
 
         spacesRecyclerView = view.findViewById(R.id.spaces_recycler_view)
 
-        //spacesRepo.getSpacesByLessorId()
+        spacesLayoutManager = LinearLayoutManager(this.context)
 
-        //spacesAdapter = SpacesAdapter<SpaceDTO>()
-
-        /*locationRepo.getLocationBySpaceId(spaceId, token).enqueue(object : Callback<Location> {
-            override fun onFailure(call: Call<Location>, t: Throwable) {
-                Toast.makeText(holder.itemView.context,"Get Failed",Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onResponse(call: Call<Location>, response: Response<Location>) {
-                holder.spaceAddressTextView.text = response.body()?.address
-            }
-        })
-        */
-
+        getSpacesInfo()
 
         goToAddSpace(view)
 
@@ -68,9 +64,35 @@ class HomeFragment : Fragment() {
         }
     }
 
-    /*
+    private fun getSpacesInfo() {
+        val sharedPreferences = this.activity?.getSharedPreferences("Login", Context.MODE_PRIVATE)
+        val token = sharedPreferences?.getString("Token", "")
+        val lessorId = 1
 
-     */
+        val bearerToken = "Bearer $token"
+
+        spacesRepo.getSpacesByLessorId(lessorId, bearerToken!!).enqueue(object : Callback<List<SpaceDTO>> {
+            override fun onFailure(call: Call<List<SpaceDTO>>, t: Throwable) {
+                Toast.makeText(activity, "Log FAILED", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<List<SpaceDTO>>, response: Response<List<SpaceDTO>>) {
+                val request = call.request()
+                Log.d("request", call.request().toString())
+                val body = response.body()
+
+                if (body!!.isNotEmpty()) {
+                    listSpacesInfo = body!!
+
+                    spacesAdapter = SpacesAdapter(listSpacesInfo)
+
+                    spacesRecyclerView.adapter = spacesAdapter
+                    spacesRecyclerView.layoutManager = spacesLayoutManager
+                }
+            }
+
+        })
+    }
 
 
 }

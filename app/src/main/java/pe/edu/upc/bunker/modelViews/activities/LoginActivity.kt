@@ -28,7 +28,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginDTO: LoginDTO
     private lateinit var user: UserLoginDTO
 
-
     private val loginRepo =
         RetrofitClientInstance().getRetrofitInstance().create(LoginRepository::class.java)
 
