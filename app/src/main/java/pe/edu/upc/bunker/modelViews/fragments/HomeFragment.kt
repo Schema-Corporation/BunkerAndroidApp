@@ -32,9 +32,7 @@ class HomeFragment : Fragment() {
     private lateinit var spacesAdapter: RecyclerView.Adapter<*>
     private lateinit var spacesLayoutManager: RecyclerView.LayoutManager
 
-    //private lateinit var spacesViewHolder: RecyclerView.ViewHolder
-
-    val spacesRepo = RetrofitClientInstance().getRetrofitInstance().create(SpacesRepository::class.java)
+    private val spacesRepo = RetrofitClientInstance().getRetrofitInstance().create(SpacesRepository::class.java)
 
     override fun onCreateView(
         inflater: LayoutInflater,

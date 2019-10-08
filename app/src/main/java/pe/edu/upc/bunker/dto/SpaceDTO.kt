@@ -3,8 +3,9 @@ package pe.edu.upc.bunker.dto
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-data class SpaceDTO(
+data class SpaceDTO (
     @Expose
     val address: String,
 
@@ -31,4 +32,4 @@ data class SpaceDTO(
 
     @Expose
     val title: String
-)
+) : Serializable

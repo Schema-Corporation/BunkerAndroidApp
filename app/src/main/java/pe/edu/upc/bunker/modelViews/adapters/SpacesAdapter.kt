@@ -25,14 +25,14 @@ class SpacesAdapter (var list: List<SpaceDTO>): RecyclerView.Adapter<SpacesViewH
         holder.spaceAddressTextView.text = list[position].address
         Picasso.get().load(list[position].firstPhoto).fit().into(holder.spacePhotoImageView)
 
-        val spaceId = list[position].id
+        //val spaceId = list[position].id
 
         holder.spaceDetailsButton.setOnClickListener {
             val context = it.context
-            context.startActivity(Intent(context, SpaceDetailsActivity::class.java))
+            val intent = Intent(context, SpaceDetailsActivity::class.java)
+            intent.putExtra("space", list[position])
+            context.startActivity(intent)
         }
-        val sharedPreferences = holder.itemView.context.getSharedPreferences("bunkerPreferences",Context.MODE_PRIVATE)
-        val token = sharedPreferences.getString("Token","Test")
 
     }
 }

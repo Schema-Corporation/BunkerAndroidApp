@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.google.android.material.button.MaterialButton
 import pe.edu.upc.bunker.R
 
 class CreateSpaceStepFourActivity : AppCompatActivity() {
@@ -23,6 +24,7 @@ class CreateSpaceStepFourActivity : AppCompatActivity() {
     private var kitchenStatus: Int = 0
     private var waterStatus: Int = 0
 
+    private lateinit var finishButton : MaterialButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +37,10 @@ class CreateSpaceStepFourActivity : AppCompatActivity() {
         kitchenIcon = findViewById(R.id.step_4_kitchen_icon)
         waterIcon = findViewById(R.id.step_4_water_icon)
 
-
-
-
         selectServiceIcon()
 
+        finishButton = findViewById(R.id.step_4_finish_creation)
+        createSpace()
     }
 
     private fun selectServiceIcon() {
@@ -62,6 +63,7 @@ class CreateSpaceStepFourActivity : AppCompatActivity() {
                 }
             }
         }
+
         lightIcon.setOnClickListener {
             when(lightStatus){
                 0-> {
@@ -137,6 +139,7 @@ class CreateSpaceStepFourActivity : AppCompatActivity() {
                 }
             }
         }
+
         waterIcon.setOnClickListener {
             when(waterStatus){
                 0->{
@@ -157,5 +160,7 @@ class CreateSpaceStepFourActivity : AppCompatActivity() {
         }
     }
 
+    private fun createSpace() {
 
+    }
 }
