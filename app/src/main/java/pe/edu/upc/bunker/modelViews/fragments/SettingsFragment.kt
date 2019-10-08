@@ -49,7 +49,7 @@ class SettingsFragment : Fragment() {
                 }
 
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    Toast.makeText(activity, "LOG FUNCIONAAA", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, "Logged Out", Toast.LENGTH_SHORT).show()
                 }
 
             })
