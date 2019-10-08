@@ -16,7 +16,7 @@ class RetrofitClientInstance {
         builder.excludeFieldsWithoutExposeAnnotation()
         val gson = builder.create()
 
-        retrofit = retrofit2.Retrofit.Builder()
+        retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.database.getBlobOrNull
 import com.google.android.material.snackbar.Snackbar
 import pe.edu.upc.bunker.R
 import pe.edu.upc.bunker.dbHelper.BunkerDBHelper
@@ -24,20 +25,11 @@ class CreateSpaceStepThreeDot1Activity : AppCompatActivity() {
     private lateinit var nextButton: Button
 
     private var bitmap1Thumbnail: Bitmap? = null
-    private var bitmap1Original: Bitmap? = null
     private var bitmap2Thumbnail: Bitmap? = null
-    private var bitmap2Original: Bitmap? = null
     private var bitmap3Thumbnail: Bitmap? = null
-    private var bitmap3Original: Bitmap? = null
     private var bitmap4Thumbnail: Bitmap? = null
-    private var bitmap4Original: Bitmap? = null
     private var bitmap5Thumbnail: Bitmap? = null
-    private var bitmap5Original: Bitmap? = null
     private var bitmap6Thumbnail: Bitmap? = null
-    private var bitmap6Original: Bitmap? = null
-
-    private var lstBitmapsThumbnails: List<Bitmap> = ArrayList()
-    private var lstBitmapsOriginals: List<Bitmap> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,9 +94,10 @@ class CreateSpaceStepThreeDot1Activity : AppCompatActivity() {
             val dbHandler = BunkerDBHelper(this, null)
             val cursor = dbHandler.getAllSpaces()
             cursor!!.moveToFirst()
-            if (cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO1)).isNullOrEmpty()) {
+            if (cursor.getBlobOrNull(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO1)) == null) {
                 Snackbar.make(nextButton, "Por favor tome una fotografía", Snackbar.LENGTH_SHORT)
                     .show()
+                return@setOnClickListener
             }
             startActivity(Intent(this, CreateSpaceStepFourActivity::class.java))
         }

@@ -92,7 +92,7 @@ class LoginActivity : AppCompatActivity() {
                                     putString("Token", token)
                                     apply()
                                 }
-
+                                sharedPref.edit().putString("UserName", user.email).apply()
                                 val loginIntent =
                                     Intent(applicationContext, NavigationActivity::class.java)
                                 startActivity(loginIntent)

@@ -1,6 +1,7 @@
 package pe.edu.upc.bunker.modelViews.activities
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.storage.FirebaseStorage
 import io.fotoapparat.Fotoapparat
 import io.fotoapparat.configuration.CameraConfiguration
 import io.fotoapparat.log.logcat
@@ -79,6 +81,44 @@ class CreateSpaceStepThreeActivity : AppCompatActivity() {
             bitmapOriginal?.compress(Bitmap.CompressFormat.JPEG, 100, bos)
             val img = bos.toByteArray()
 
+            val storage = FirebaseStorage.getInstance()
+
+            val storageRef = storage.reference
+
+            val sharedPreferences = this@CreateSpaceStepThreeActivity.getSharedPreferences(
+                "Login",
+                Context.MODE_PRIVATE
+            )
+            val userName = sharedPreferences.getString("UserName", "test")
+
+            val spaceTitle = cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_TITLE))
+
+            val photo1Ref = storageRef.child("spaces/$userName/$spaceTitle/photo1.jpeg")
+            val uploadTask = photo1Ref.putBytes(img)
+            uploadTask.addOnFailureListener {
+                return@addOnFailureListener
+            }.addOnSuccessListener {
+                uploadTask.continueWithTask { task ->
+                    if (!task.isSuccessful) {
+                        Log.d("FireBaseDebug", "Could not obtain download url")
+                    }
+                    photo1Ref.downloadUrl
+                }.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val downloadUri = task.result
+                        val url = downloadUri!!.toString()
+                        Log.d("FireBaseDebug", "Download URL = $url")
+                    } else {
+                        Log.d(
+                            "FireBaseDebug",
+                            "Download URL failed to obtain since task failed"
+                        )
+                        return@addOnCompleteListener
+
+                    }
+                }
+            }
+
             when {
                 String(
                     cursor.getBlob(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO1)),
@@ -117,6 +157,7 @@ class CreateSpaceStepThreeActivity : AppCompatActivity() {
             finish()
         }
     }
+
     private fun pressedShoot() {
         fabCamera.setOnClickListener {
             takePhoto()
