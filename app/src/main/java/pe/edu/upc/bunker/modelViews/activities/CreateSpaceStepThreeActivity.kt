@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.storage.FirebaseStorage
 import io.fotoapparat.Fotoapparat
 import io.fotoapparat.configuration.CameraConfiguration
@@ -25,6 +26,7 @@ import pe.edu.upc.bunker.R
 import pe.edu.upc.bunker.dbHelper.BunkerDBHelper
 import java.io.ByteArrayOutputStream
 import kotlin.math.min
+import kotlin.math.roundToInt
 
 
 class CreateSpaceStepThreeActivity : AppCompatActivity() {
@@ -70,8 +72,6 @@ class CreateSpaceStepThreeActivity : AppCompatActivity() {
             val intent = Intent(this, CreateSpaceStepThreeDot1Activity::class.java)
             Log.d("CameraDebug", "photoThumbnail saved")
             intent.putExtra("photoThumbnail", bitmapThumbnail)
-            //Log.d("CameraDebug", "photoOriginal saved")
-            //intent.putExtra("photoOriginal", bitmapOriginal)
             Log.d("CameraDebug", "rotation saved")
             intent.putExtra("rotationDegree", rotationDegree)
             val dbHandler = BunkerDBHelper(this, null)
@@ -80,81 +80,98 @@ class CreateSpaceStepThreeActivity : AppCompatActivity() {
             val bos = ByteArrayOutputStream()
             bitmapOriginal?.compress(Bitmap.CompressFormat.JPEG, 100, bos)
             val img = bos.toByteArray()
-
-            val storage = FirebaseStorage.getInstance()
-
-            val storageRef = storage.reference
-
-            val sharedPreferences = this@CreateSpaceStepThreeActivity.getSharedPreferences(
-                "Login",
-                Context.MODE_PRIVATE
-            )
-            val userName = sharedPreferences.getString("UserName", "test")
-
             val spaceTitle = cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_TITLE))
 
-            val photo1Ref = storageRef.child("spaces/$userName/$spaceTitle/photo1.jpeg")
-            val uploadTask = photo1Ref.putBytes(img)
-            uploadTask.addOnFailureListener {
-                return@addOnFailureListener
-            }.addOnSuccessListener {
-                uploadTask.continueWithTask { task ->
-                    if (!task.isSuccessful) {
-                        Log.d("FireBaseDebug", "Could not obtain download url")
-                    }
-                    photo1Ref.downloadUrl
-                }.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val downloadUri = task.result
-                        val url = downloadUri!!.toString()
-                        Log.d("FireBaseDebug", "Download URL = $url")
-                    } else {
-                        Log.d(
-                            "FireBaseDebug",
-                            "Download URL failed to obtain since task failed"
-                        )
-                        return@addOnCompleteListener
-
-                    }
-                }
-            }
-
             when {
-                String(
-                    cursor.getBlob(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO1)),
-                    charset("UTF-8")
-                ).isEmpty()
-                -> dbHandler.addFirstPhoto(img)
-                String(
-                    cursor.getBlob(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO2)),
-                    charset("UTF-8")
-                ).isEmpty()
-                -> dbHandler.addSecondPhoto(img)
-                String(
-                    cursor.getBlob(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO3)),
-                    charset("UTF-8")
-                ).isEmpty()
-                -> dbHandler.addThirdPhoto(img)
-                String(
-                    cursor.getBlob(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO4)),
-                    charset("UTF-8")
-                ).isEmpty()
-                -> dbHandler.addFourthPhoto(img)
-                String(
-                    cursor.getBlob(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO5)),
-                    charset("UTF-8")
-                ).isEmpty()
-                -> dbHandler.addFifthPhoto(img)
-                String(
-                    cursor.getBlob(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO6)),
-                    charset("UTF-8")
-                ).isEmpty()
-                -> dbHandler.addSixthPhoto(img)
+                cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO1)).isNullOrBlank() -> uploadFB(
+                    title = spaceTitle,
+                    index = "1",
+                    img = img,
+                    dbHelper = dbHandler
+                )
+                cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO2)).isNullOrBlank() -> uploadFB(
+                    title = spaceTitle,
+                    index = "2",
+                    img = img,
+                    dbHelper = dbHandler
+                )
+                cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO3)).isNullOrBlank() -> uploadFB(
+                    title = spaceTitle,
+                    index = "3",
+                    img = img,
+                    dbHelper = dbHandler
+                )
+                cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO4)).isNullOrBlank() -> uploadFB(
+                    title = spaceTitle,
+                    index = "4",
+                    img = img,
+                    dbHelper = dbHandler
+                )
+                cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO5)).isNullOrBlank() -> uploadFB(
+                    title = spaceTitle,
+                    index = "5",
+                    img = img,
+                    dbHelper = dbHandler
+                )
+                cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO6)).isNullOrBlank() -> uploadFB(
+                    title = spaceTitle,
+                    index = "6",
+                    img = img,
+                    dbHelper = dbHandler
+                )
             }
             cursor.close()
-
             setResult(RESULT_OK, intent)
-            finish()
+        }
+    }
+
+    private fun uploadFB(title: String, index: String, img: ByteArray, dbHelper: BunkerDBHelper) {
+        val storage = FirebaseStorage.getInstance()
+
+        val storageRef = storage.reference
+
+        val sharedPreferences = this@CreateSpaceStepThreeActivity.getSharedPreferences(
+            "Login",
+            Context.MODE_PRIVATE
+        )
+        val userName = sharedPreferences.getString("UserName", "test")
+
+        val photo1Ref = storageRef.child("spaces/$userName/$title/photo$index.jpeg")
+        val uploadTask = photo1Ref.putBytes(img)
+        fabCamera.visibility = View.GONE
+        uploadTask.addOnProgressListener { taskSnapshot ->
+            val progress = (100.0 * taskSnapshot.bytesTransferred) / taskSnapshot.totalByteCount
+            val roundedProgress = progress.roundToInt()
+            Snackbar.make(
+                previewImageButton,
+                "Subiendo Imagen: $roundedProgress% completado",
+                Snackbar.LENGTH_SHORT
+            ).show()
+            Log.d("FireBaseDebug", "Upload is $roundedProgress% done")
+        }.addOnPausedListener {
+            Snackbar.make(previewImageButton, "Subida Pausada", Snackbar.LENGTH_SHORT).show()
+            Log.d("FireBaseDebug", "Upload was paused")
+            fabCamera.visibility = View.VISIBLE
+        }.addOnFailureListener {
+            Snackbar.make(previewImageButton, "Subida Fallida", Snackbar.LENGTH_SHORT).show()
+            Log.d("FireBaseDebug", "Upload failed")
+            fabCamera.visibility = View.VISIBLE
+        }.addOnSuccessListener {
+            Snackbar.make(previewImageButton, "Subida Exitosa", Snackbar.LENGTH_SHORT).show()
+            Log.d("FireBaseDebug", "Upload successful")
+            photo1Ref.downloadUrl.addOnSuccessListener {
+                Log.d("FireBaseDebug", "URL = $it")
+                val url = it.toString()
+                when (index) {
+                    "1" -> dbHelper.addFirstPhoto(url = url)
+                    "2" -> dbHelper.addSecondPhoto(url = url)
+                    "3" -> dbHelper.addThirdPhoto(url = url)
+                    "4" -> dbHelper.addFourthPhoto(url = url)
+                    "5" -> dbHelper.addFifthPhoto(url = url)
+                    "6" -> dbHelper.addSixthPhoto(url = url)
+                }
+                finish()
+            }
         }
     }
 

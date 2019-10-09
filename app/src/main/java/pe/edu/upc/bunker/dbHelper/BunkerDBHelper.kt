@@ -27,12 +27,12 @@ class BunkerDBHelper(
                 COLUMN_ADDRESS + " TEXT," +
                 COLUMN_LATITUDE + " DECIMAL," +
                 COLUMN_LONGITUDE + " DECIMAL," +
-                COLUMN_PHOTO1 + " BLOB," +
-                COLUMN_PHOTO2 + " BLOB," +
-                COLUMN_PHOTO3 + " BLOB," +
-                COLUMN_PHOTO4 + " BLOB," +
-                COLUMN_PHOTO5 + " BLOB," +
-                COLUMN_PHOTO6 + " BLOB" +
+                COLUMN_PHOTO1 + " TEXT," +
+                COLUMN_PHOTO2 + " TEXT," +
+                COLUMN_PHOTO3 + " TEXT," +
+                COLUMN_PHOTO4 + " TEXT," +
+                COLUMN_PHOTO5 + " TEXT," +
+                COLUMN_PHOTO6 + " TEXT" +
                 ")")
         db?.execSQL(createSpaceTable)
     }
@@ -114,60 +114,60 @@ class BunkerDBHelper(
     }
 
     fun addFirstPhoto(
-        photo: ByteArray
+        url: String
     ) {
         val values = ContentValues()
-        values.put(COLUMN_PHOTO1, photo)
+        values.put(COLUMN_PHOTO1, url)
         val db = this.writableDatabase
         db.update(TABLE_NAME, values, "id = 1", null)
         db.close()
     }
 
     fun addSecondPhoto(
-        photo: ByteArray
+        url: String
     ) {
         val values = ContentValues()
-        values.put(COLUMN_PHOTO2, photo)
+        values.put(COLUMN_PHOTO2, url)
         val db = this.writableDatabase
         db.update(TABLE_NAME, values, "id = 1", null)
         db.close()
     }
 
     fun addThirdPhoto(
-        photo: ByteArray
+        url: String
     ) {
         val values = ContentValues()
-        values.put(COLUMN_PHOTO3, photo)
+        values.put(COLUMN_PHOTO3, url)
         val db = this.writableDatabase
         db.update(TABLE_NAME, values, "id = 1", null)
         db.close()
     }
 
     fun addFourthPhoto(
-        photo: ByteArray
+        url: String
     ) {
         val values = ContentValues()
-        values.put(COLUMN_PHOTO4, photo)
+        values.put(COLUMN_PHOTO4, url)
         val db = this.writableDatabase
         db.update(TABLE_NAME, values, "id = 1", null)
         db.close()
     }
 
     fun addFifthPhoto(
-        photo: ByteArray
+        url: String
     ) {
         val values = ContentValues()
-        values.put(COLUMN_PHOTO5, photo)
+        values.put(COLUMN_PHOTO5, url)
         val db = this.writableDatabase
         db.update(TABLE_NAME, values, "id = 1", null)
         db.close()
     }
 
     fun addSixthPhoto(
-        photo: ByteArray
+        url: String
     ) {
         val values = ContentValues()
-        values.put(COLUMN_PHOTO6, photo)
+        values.put(COLUMN_PHOTO6, url)
         val db = this.writableDatabase
         db.update(TABLE_NAME, values, "id = 1", null)
         db.close()
