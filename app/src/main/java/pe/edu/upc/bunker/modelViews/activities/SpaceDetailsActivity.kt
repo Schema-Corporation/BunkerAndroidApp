@@ -2,14 +2,12 @@ package pe.edu.upc.bunker.modelViews.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.squareup.picasso.Picasso
 import pe.edu.upc.bunker.R
-import pe.edu.upc.bunker.dto.SpaceDTO
+import pe.edu.upc.bunker.dto.SpaceInfoDTO
 
 class SpaceDetailsActivity : AppCompatActivity() {
 
@@ -27,7 +25,7 @@ class SpaceDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_space_details)
 
-        var mySpace = intent.getSerializableExtra("space") as SpaceDTO
+        var mySpace = intent.getSerializableExtra("space") as SpaceInfoDTO
 
         spaceTitleTextView = findViewById(R.id.space_title)
         spaceDescriptionTextView = findViewById(R.id.space_description)

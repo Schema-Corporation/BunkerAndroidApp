@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import pe.edu.upc.bunker.R
-import pe.edu.upc.bunker.dto.SpaceDTO
+import pe.edu.upc.bunker.dto.SpaceInfoDTO
 import pe.edu.upc.bunker.modelViews.activities.CreateSpaceStepOneActivity
 import pe.edu.upc.bunker.modelViews.adapters.SpacesAdapter
 import pe.edu.upc.bunker.repository.RetrofitClientInstance
@@ -25,7 +25,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var addSpaceButton : FloatingActionButton
 
-    private lateinit var listSpacesInfo : List<SpaceDTO>
+    private lateinit var listSpacesInfo : List<SpaceInfoDTO>
 
     private lateinit var spacesRecyclerView: RecyclerView
 
@@ -68,12 +68,12 @@ class HomeFragment : Fragment() {
         val bearerToken = "Bearer $token"
 
         spacesRepo.getSpacesByLessorId(lessorId, bearerToken)
-            .enqueue(object : Callback<List<SpaceDTO>> {
-            override fun onFailure(call: Call<List<SpaceDTO>>, t: Throwable) {
+            .enqueue(object : Callback<List<SpaceInfoDTO>> {
+            override fun onFailure(call: Call<List<SpaceInfoDTO>>, t: Throwable) {
                 Toast.makeText(activity, "Log FAILED", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onResponse(call: Call<List<SpaceDTO>>, response: Response<List<SpaceDTO>>) {
+            override fun onResponse(call: Call<List<SpaceInfoDTO>>, response: Response<List<SpaceInfoDTO>>) {
                 val body = response.body()
 
                 if (body!!.isNotEmpty()) {

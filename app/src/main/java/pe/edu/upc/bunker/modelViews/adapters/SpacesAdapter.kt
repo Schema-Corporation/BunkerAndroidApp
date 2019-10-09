@@ -1,16 +1,15 @@
 package pe.edu.upc.bunker.modelViews.adapters
 
-import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import pe.edu.upc.bunker.R
-import pe.edu.upc.bunker.dto.SpaceDTO
+import pe.edu.upc.bunker.dto.SpaceInfoDTO
 import pe.edu.upc.bunker.modelViews.activities.SpaceDetailsActivity
 
-class SpacesAdapter (var list: List<SpaceDTO>): RecyclerView.Adapter<SpacesViewHolder>(){
+class SpacesAdapter (var list: List<SpaceInfoDTO>): RecyclerView.Adapter<SpacesViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpacesViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.spaces_recycler_view_view_holder, parent, false)
         return SpacesViewHolder(view)
