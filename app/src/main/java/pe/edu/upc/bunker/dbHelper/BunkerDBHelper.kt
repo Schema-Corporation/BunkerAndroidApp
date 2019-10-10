@@ -5,6 +5,9 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import pe.edu.upc.bunker.dto.createSpace.LocationCreateDTO
+import pe.edu.upc.bunker.dto.createSpace.PhotoCreateDTO
+import pe.edu.upc.bunker.dto.createSpace.SpaceCreateDTO
 
 class BunkerDBHelper(
     context: Context,
@@ -16,8 +19,8 @@ class BunkerDBHelper(
     ) {
     override fun onCreate(db: SQLiteDatabase?) {
         val createSpaceTable = ("CREATE TABLE " +
-                TABLE_NAME + "("
-                + COLUMN_ID + " INTEGER PRIMARY KEY," +
+                TABLE_NAME + "(" +
+                COLUMN_ID + " INTEGER PRIMARY KEY," +
                 COLUMN_HEIGHT + " DECIMAL," +
                 COLUMN_WIDTH + " DECIMAL," +
                 COLUMN_AREA + " DECIMAL," +
@@ -32,7 +35,13 @@ class BunkerDBHelper(
                 COLUMN_PHOTO3 + " TEXT," +
                 COLUMN_PHOTO4 + " TEXT," +
                 COLUMN_PHOTO5 + " TEXT," +
-                COLUMN_PHOTO6 + " TEXT" +
+                COLUMN_PHOTO6 + " TEXT," +
+                COLUMN_SERVICE1 + " INTEGER," +
+                COLUMN_SERVICE2 + " INTEGER," +
+                COLUMN_SERVICE3 + " INTEGER," +
+                COLUMN_SERVICE4 + " INTEGER," +
+                COLUMN_SERVICE5 + " INTEGER," +
+                COLUMN_SERVICE6 + " INTEGER" +
                 ")")
         db?.execSQL(createSpaceTable)
     }
@@ -60,6 +69,12 @@ class BunkerDBHelper(
         values.put(COLUMN_PHOTO4, "")
         values.put(COLUMN_PHOTO5, "")
         values.put(COLUMN_PHOTO6, "")
+        values.put(COLUMN_SERVICE1, 0)
+        values.put(COLUMN_SERVICE2, 0)
+        values.put(COLUMN_SERVICE3, 0)
+        values.put(COLUMN_SERVICE4, 0)
+        values.put(COLUMN_SERVICE5, 0)
+        values.put(COLUMN_SERVICE6, 0)
         val db = this.writableDatabase
         db.insert(TABLE_NAME, null, values)
         db.close()
@@ -173,6 +188,125 @@ class BunkerDBHelper(
         db.close()
     }
 
+    fun addServices(
+        service_1: Int,
+        service_2: Int,
+        service_3: Int,
+        service_4: Int,
+        service_5: Int,
+        service_6: Int
+    ) {
+        val values = ContentValues()
+        values.put(COLUMN_SERVICE1, service_1)
+        values.put(COLUMN_SERVICE2, service_2)
+        values.put(COLUMN_SERVICE3, service_3)
+        values.put(COLUMN_SERVICE4, service_4)
+        values.put(COLUMN_SERVICE5, service_5)
+        values.put(COLUMN_SERVICE6, service_6)
+        val db = this.writableDatabase
+        db.update(TABLE_NAME, values, "id = 1", null)
+        db.close()
+    }
+
+    private fun addPhotosToArray(
+        photo1: String,
+        photo2: String,
+        photo3: String,
+        photo4: String,
+        photo5: String,
+        photo6: String): ArrayList<PhotoCreateDTO> {
+
+        val listPhotoCreateDTO = ArrayList<PhotoCreateDTO>()
+
+        val photos = ArrayList<String>()
+
+        if (photo1 != null) {
+            photos.add(photo1)
+        }
+        if (photo2 != null) {
+            photos.add(photo2)
+        }
+        if (photo3 != null) {
+            photos.add(photo3)
+        }
+        if (photo4 != null) {
+            photos.add(photo4)
+        }
+        if (photo5 != null) {
+            photos.add(photo5)
+        }
+        if (photo6 != null) {
+            photos.add(photo6)
+        }
+
+        photos.forEach {
+            val photo = PhotoCreateDTO()
+            photo.photoUrl = it
+
+            listPhotoCreateDTO.add(photo)
+        }
+        return listPhotoCreateDTO
+    }
+
+    private fun addLocationData(
+        address: String,
+        latitude: Double,
+        longitude: Double
+    ) : LocationCreateDTO {
+        val locationCreateDTO = LocationCreateDTO()
+        locationCreateDTO.address = address
+        locationCreateDTO.latitude = latitude
+        locationCreateDTO.longitude = longitude
+
+        return locationCreateDTO
+    }
+
+    val getSpaceFromDb: SpaceCreateDTO
+        get() {
+            var spaceCreateDTO = SpaceCreateDTO()
+
+            val findSpaceQuery = "SELECT * FROM $TABLE_NAME"
+            val db = this.writableDatabase
+            val cursor = db.rawQuery(findSpaceQuery, null)
+
+            if (cursor.moveToFirst()) {
+                do {
+                    // step 1
+                    spaceCreateDTO.height = cursor.getDouble(cursor.getColumnIndex(COLUMN_HEIGHT))
+                    spaceCreateDTO.width = cursor.getDouble(cursor.getColumnIndex(COLUMN_WIDTH))
+                    spaceCreateDTO.area = cursor.getDouble(cursor.getColumnIndex(COLUMN_AREA))
+                    spaceCreateDTO.title = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
+                    spaceCreateDTO.description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION))
+
+                    // step 2
+                    val address = cursor.getString(cursor.getColumnIndex(COLUMN_ADDRESS))
+                    val latitude = cursor.getDouble(cursor.getColumnIndex(COLUMN_LATITUDE))
+                    val longitude = cursor.getDouble(cursor.getColumnIndex(COLUMN_LONGITUDE))
+
+                    val locationDTO = addLocationData(address, latitude, longitude)
+
+                    spaceCreateDTO.location = locationDTO
+
+                    // step 3
+                    val photo1 = cursor.getString(cursor.getColumnIndex(COLUMN_PHOTO1))
+                    val photo2 = cursor.getString(cursor.getColumnIndex(COLUMN_PHOTO2))
+                    val photo3 = cursor.getString(cursor.getColumnIndex(COLUMN_PHOTO3))
+                    val photo4 = cursor.getString(cursor.getColumnIndex(COLUMN_PHOTO4))
+                    val photo5 = cursor.getString(cursor.getColumnIndex(COLUMN_PHOTO5))
+                    val photo6 = cursor.getString(cursor.getColumnIndex(COLUMN_PHOTO6))
+
+                    val photosCreateDTO = addPhotosToArray(photo1, photo2, photo3, photo4, photo5, photo6)
+
+                    spaceCreateDTO.photos = photosCreateDTO
+
+
+
+                } while (cursor.moveToNext())
+            }
+
+            return spaceCreateDTO
+        }
+
     companion object {
         private const val DATABASE_VERSION = 1
         private const val DATABASE_NAME = "bunker.db"
@@ -193,6 +327,11 @@ class BunkerDBHelper(
         const val COLUMN_PHOTO4 = "photo4"
         const val COLUMN_PHOTO5 = "photo5"
         const val COLUMN_PHOTO6 = "photo6"
-
+        const val COLUMN_SERVICE1 = "service1"
+        const val COLUMN_SERVICE2 = "service2"
+        const val COLUMN_SERVICE3 = "service3"
+        const val COLUMN_SERVICE4 = "service4"
+        const val COLUMN_SERVICE5 = "service5"
+        const val COLUMN_SERVICE6 = "service6"
     }
 }

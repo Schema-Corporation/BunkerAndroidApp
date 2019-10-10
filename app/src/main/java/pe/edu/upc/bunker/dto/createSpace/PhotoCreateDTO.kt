@@ -7,5 +7,5 @@ import com.google.gson.annotations.SerializedName
 data class PhotoCreateDTO(
     @SerializedName("photo_url")
     @Expose
-    val photoUrl: String
+    var photoUrl: String?= ""
 )

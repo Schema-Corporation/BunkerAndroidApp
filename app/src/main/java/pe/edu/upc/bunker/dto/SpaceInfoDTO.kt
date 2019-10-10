@@ -32,4 +32,5 @@ data class SpaceInfoDTO (
 
     @Expose
     val title: String
+
 ) : Serializable

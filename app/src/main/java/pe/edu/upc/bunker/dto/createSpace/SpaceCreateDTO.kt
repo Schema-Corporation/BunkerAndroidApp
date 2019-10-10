@@ -6,37 +6,37 @@ import com.google.gson.annotations.SerializedName
 
 data class SpaceCreateDTO(
     @Expose
-    val area: Int,
+    var area: Double?= 0.0,
 
     @Expose
-    val description: String,
+    var description: String?= "",
 
     @Expose
-    val height: Int,
+    var height: Double?= 0.0,
 
     @Expose
-    val lessor: LessorCreateDTO,
+    var lessor: LessorCreateDTO?= LessorCreateDTO(),
 
     @Expose
-    val location: LocationCreateDTO,
+    var location: LocationCreateDTO?= LocationCreateDTO(),
 
     @Expose
-    val photos: List<PhotoCreateDTO>,
+    var photos: List<PhotoCreateDTO>?= ArrayList<PhotoCreateDTO>(),
 
     @SerializedName("rent_price")
     @Expose
-    val rentPrice: Int,
+    var rentPrice: Double?= 0.0,
 
     @Expose
-    val services: List<ServiceCreateDTO>,
+    var services: List<ServiceCreateDTO>?= ArrayList<ServiceCreateDTO>(),
 
     @SerializedName("space_type")
     @Expose
-    val spaceType: Int,
+    var spaceType: Int?= 0,
 
     @Expose
-    val title: String,
+    var title: String?= "",
 
     @Expose
-    val width: Int
+    var width: Double?= 0.0
 )

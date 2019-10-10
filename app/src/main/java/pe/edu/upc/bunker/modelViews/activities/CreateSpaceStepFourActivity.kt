@@ -8,6 +8,8 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
 import pe.edu.upc.bunker.R
+import pe.edu.upc.bunker.dbHelper.BunkerDBHelper
+import pe.edu.upc.bunker.dto.createSpace.SpaceCreateDTO
 
 class CreateSpaceStepFourActivity : AppCompatActivity() {
     private  lateinit var wifiIcon: ImageView
@@ -24,6 +26,10 @@ class CreateSpaceStepFourActivity : AppCompatActivity() {
     private var kitchenStatus: Int = 0
     private var waterStatus: Int = 0
 
+    private val dbHandler = BunkerDBHelper(this, null)
+
+    private lateinit var spaceCreateDTO: SpaceCreateDTO
+
     private lateinit var finishButton : MaterialButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +42,8 @@ class CreateSpaceStepFourActivity : AppCompatActivity() {
         printIcon = findViewById(R.id.step_4_print_icon)
         kitchenIcon = findViewById(R.id.step_4_kitchen_icon)
         waterIcon = findViewById(R.id.step_4_water_icon)
+
+        spaceCreateDTO = SpaceCreateDTO()
 
         selectServiceIcon()
 
@@ -161,6 +169,8 @@ class CreateSpaceStepFourActivity : AppCompatActivity() {
     }
 
     private fun createSpace() {
-
+        finishButton.setOnClickListener {
+            spaceCreateDTO = dbHandler.getSpaceFromDb
+        }
     }
 }

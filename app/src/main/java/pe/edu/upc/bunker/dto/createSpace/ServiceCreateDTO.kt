@@ -5,5 +5,5 @@ import com.google.gson.annotations.Expose
 
 data class ServiceCreateDTO(
     @Expose
-    val id: Int
+    var id: Int?= 0
 )

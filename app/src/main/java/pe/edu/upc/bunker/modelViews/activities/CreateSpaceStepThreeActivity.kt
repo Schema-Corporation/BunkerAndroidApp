@@ -72,6 +72,7 @@ class CreateSpaceStepThreeActivity : AppCompatActivity() {
             val intent = Intent(this, CreateSpaceStepThreeDot1Activity::class.java)
             Log.d("CameraDebug", "photoThumbnail saved")
             intent.putExtra("photoThumbnail", bitmapThumbnail)
+            setResult(RESULT_OK, intent)
             Log.d("CameraDebug", "rotation saved")
             intent.putExtra("rotationDegree", rotationDegree)
             val dbHandler = BunkerDBHelper(this, null)

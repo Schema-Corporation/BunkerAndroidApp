@@ -5,11 +5,11 @@ import com.google.gson.annotations.Expose
 
 data class LocationCreateDTO(
     @Expose
-    val address: String,
+    var address: String?= "",
 
     @Expose
-    val latitude: String,
+    var latitude: Double?= 0.0,
 
     @Expose
-    val longitude: String
+    var longitude: Double?= 0.0
 )
