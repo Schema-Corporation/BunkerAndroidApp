@@ -1,5 +1,6 @@
 package pe.edu.upc.bunker.modelViews.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,12 @@ import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.activity_create_space_step_one.*
 import pe.edu.upc.bunker.R
 import pe.edu.upc.bunker.dbHelper.BunkerDBHelper
+import pe.edu.upc.bunker.models.Lessor
+import pe.edu.upc.bunker.repository.LessorRepository
+import pe.edu.upc.bunker.repository.RetrofitClientInstance
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class CreateSpaceStepOneActivity : AppCompatActivity() {
 
@@ -25,6 +32,9 @@ class CreateSpaceStepOneActivity : AppCompatActivity() {
     private val dbHandler = BunkerDBHelper(this, null)
 
     private val spaceTypes = arrayOf("Oficina", "Espacio de trabajo", "Almacén")
+
+    private val lessorRepo =
+        RetrofitClientInstance().getRetrofitInstance().create(LessorRepository::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,29 +105,52 @@ class CreateSpaceStepOneActivity : AppCompatActivity() {
                 text_input_description.error.isNullOrEmpty()
             ) {
                 dbHandler.startSpace()
-                dbHandler.addFirstStep(
-                    height = height.toDouble(),
-                    width = width.toDouble(),
-                    area = area.toDouble(),
-                    spaceType = spaceType,
-                    description = description,
-                    title = title
+
+                val sharedPreferences = this@CreateSpaceStepOneActivity.getSharedPreferences(
+                    "Login",
+                    Context.MODE_PRIVATE
                 )
-                val cursor = dbHandler.getAllSpaces()
-                cursor!!.moveToFirst()
-                Log.d(
-                    "DBDebug",
-                    "ID: ${cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_ID))}"
-                )
-                Log.d(
-                    "DBDebug",
-                    "TITLE: ${cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_TITLE))}"
-                )
-                cursor.close()
-                val nextStepIntent =
-                    Intent(applicationContext, CreateSpaceStepTwoActivity::class.java)
-                startActivity(nextStepIntent)
-                finish()
+                val userId = sharedPreferences.getInt("UserId", 0)
+                val token = sharedPreferences.getString("Token", "test")
+                val authorization = "Bearer ${token}"
+
+                lessorRepo.getLessorByUserId(userId, authorization).enqueue(object: Callback<Lessor> {
+                    override fun onFailure(call: Call<Lessor>, t: Throwable) {
+                        // Manejar excepción
+                    }
+
+                    override fun onResponse(call: Call<Lessor>, response: Response<Lessor>) {
+
+                        var body = response.body()
+                        var lessorId = body!!.id
+
+                        dbHandler.addFirstStep(
+                            height = height.toDouble(),
+                            width = width.toDouble(),
+                            area = area.toDouble(),
+                            spaceType = spaceType,
+                            description = description,
+                            title = title,
+                            lessorId = lessorId
+                        )
+                        val cursor = dbHandler.getAllSpaces()
+                        cursor!!.moveToFirst()
+                        Log.d(
+                            "DBDebug",
+                            "ID: ${cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_ID))}"
+                        )
+                        Log.d(
+                            "DBDebug",
+                            "TITLE: ${cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_TITLE))}"
+                        )
+                        cursor.close()
+                        val nextStepIntent =
+                            Intent(applicationContext, CreateSpaceStepTwoActivity::class.java)
+                        startActivity(nextStepIntent)
+                        finish()
+                    }
+
+                })
             }
         }
     }

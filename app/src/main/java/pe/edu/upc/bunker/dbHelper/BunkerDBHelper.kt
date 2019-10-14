@@ -5,10 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import pe.edu.upc.bunker.dto.createSpace.LocationCreateDTO
-import pe.edu.upc.bunker.dto.createSpace.PhotoCreateDTO
-import pe.edu.upc.bunker.dto.createSpace.ServiceCreateDTO
-import pe.edu.upc.bunker.dto.createSpace.SpaceCreateDTO
+import pe.edu.upc.bunker.dto.createSpace.*
 
 class BunkerDBHelper(
     context: Context,
@@ -43,6 +40,7 @@ class BunkerDBHelper(
                 COLUMN_SERVICE4 + " INTEGER," +
                 COLUMN_SERVICE5 + " INTEGER," +
                 COLUMN_SERVICE6 + " INTEGER" +
+                COLUMN_LESSOR_ID + " INTEGER" +
                 ")")
         db?.execSQL(createSpaceTable)
     }
@@ -105,7 +103,8 @@ class BunkerDBHelper(
         area: Double,
         spaceType: Int,
         title: String,
-        description: String
+        description: String,
+        lessorId: Int
     ) {
         val values = ContentValues()
         values.put(COLUMN_HEIGHT, height)
@@ -114,6 +113,7 @@ class BunkerDBHelper(
         values.put(COLUMN_SPACE_TYPE, spaceType)
         values.put(COLUMN_TITLE, title)
         values.put(COLUMN_DESCRIPTION, description)
+        values.put(COLUMN_LESSOR_ID, lessorId)
         val db = this.writableDatabase
         db.update(TABLE_NAME, values, "id = 1", null)
         db.close()
@@ -190,20 +190,36 @@ class BunkerDBHelper(
     }
 
     fun addServices(
-        service_1: Int,
-        service_2: Int,
-        service_3: Int,
-        service_4: Int,
-        service_5: Int,
-        service_6: Int
+        lstServices:List<Int>
     ) {
         val values = ContentValues()
-        values.put(COLUMN_SERVICE1, service_1)
-        values.put(COLUMN_SERVICE2, service_2)
-        values.put(COLUMN_SERVICE3, service_3)
-        values.put(COLUMN_SERVICE4, service_4)
-        values.put(COLUMN_SERVICE5, service_5)
-        values.put(COLUMN_SERVICE6, service_6)
+        for (service in lstServices)
+        {
+            if(service==1)
+            {
+                values.put(COLUMN_SERVICE1, service)
+            }
+            if(service==2)
+            {
+                values.put(COLUMN_SERVICE2, service)
+            }
+            if(service==3)
+            {
+                values.put(COLUMN_SERVICE3, service)
+            }
+            if(service==4)
+            {
+                values.put(COLUMN_SERVICE4, service)
+            }
+            if(service==5)
+            {
+                values.put(COLUMN_SERVICE5, service)
+            }
+            if(service==6)
+            {
+                values.put(COLUMN_SERVICE6, service)
+            }
+        }
         val db = this.writableDatabase
         db.update(TABLE_NAME, values, "id = 1", null)
         db.close()
@@ -271,12 +287,24 @@ class BunkerDBHelper(
         service6: Int
     ): ArrayList<ServiceCreateDTO> {
         val serviceList = ArrayList<ServiceCreateDTO>()
-        serviceList.add(ServiceCreateDTO(service1))
-        serviceList.add(ServiceCreateDTO(service2))
-        serviceList.add(ServiceCreateDTO(service3))
-        serviceList.add(ServiceCreateDTO(service4))
-        serviceList.add(ServiceCreateDTO(service5))
-        serviceList.add(ServiceCreateDTO(service6))
+        if (service1 != 0) {
+            serviceList.add(ServiceCreateDTO(service1))
+        }
+        if (service2 != 0) {
+            serviceList.add(ServiceCreateDTO(service2))
+        }
+        if (service3 != 0) {
+            serviceList.add(ServiceCreateDTO(service3))
+        }
+        if (service4 != 0) {
+            serviceList.add(ServiceCreateDTO(service4))
+        }
+        if (service5 != 0) {
+            serviceList.add(ServiceCreateDTO(service5))
+        }
+        if (service6 != 0) {
+            serviceList.add(ServiceCreateDTO(service6))
+        }
 
         return serviceList
     }
@@ -298,6 +326,10 @@ class BunkerDBHelper(
                     spaceCreateDTO.title = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
                     spaceCreateDTO.description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION))
 
+                    val lessorId = cursor.getInt(cursor.getColumnIndex(COLUMN_LESSOR_ID))
+                    val lessorCreateDTO = LessorCreateDTO(lessorId)
+                    spaceCreateDTO.lessor = lessorCreateDTO
+
                     // step 2
                     val address = cursor.getString(cursor.getColumnIndex(COLUMN_ADDRESS))
                     val latitude = cursor.getDouble(cursor.getColumnIndex(COLUMN_LATITUDE))
@@ -318,7 +350,9 @@ class BunkerDBHelper(
                     val photosCreateDTO = addPhotosToArray(photo1, photo2, photo3, photo4, photo5, photo6)
 
                     spaceCreateDTO.photos = photosCreateDTO
+
                     // Step 4
+
                     val service1 = cursor.getInt(cursor.getColumnIndex(COLUMN_SERVICE1))
                     val service2 = cursor.getInt(cursor.getColumnIndex(COLUMN_SERVICE2))
                     val service3 = cursor.getInt(cursor.getColumnIndex(COLUMN_SERVICE3))
@@ -330,6 +364,8 @@ class BunkerDBHelper(
                         addServiceData(service1, service2, service3, service4, service5, service6)
 
                     spaceCreateDTO.services = serviceList
+
+                    val lessor : LessorCreateDTO = LessorCreateDTO()
                 } while (cursor.moveToNext())
             }
             cursor.close()
@@ -363,5 +399,6 @@ class BunkerDBHelper(
         const val COLUMN_SERVICE4 = "service4"
         const val COLUMN_SERVICE5 = "service5"
         const val COLUMN_SERVICE6 = "service6"
+        const val COLUMN_LESSOR_ID = "lessorId"
     }
 }

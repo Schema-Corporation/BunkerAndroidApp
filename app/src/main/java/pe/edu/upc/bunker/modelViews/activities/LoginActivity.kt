@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
 import pe.edu.upc.bunker.R
 import pe.edu.upc.bunker.dto.LoginDTO
+import pe.edu.upc.bunker.dto.LoginResponseDTO
 import pe.edu.upc.bunker.dto.UserLoginDTO
 import pe.edu.upc.bunker.repository.LoginRepository
 import pe.edu.upc.bunker.repository.RetrofitClientInstance
@@ -56,13 +57,16 @@ class LoginActivity : AppCompatActivity() {
             loginDTO.user = user
             Log.d("Debug", "${user.email} ${user.password}")
 
-            loginRepo.login(login = loginDTO).enqueue(object : Callback<LoginDTO> {
-                override fun onFailure(call: Call<LoginDTO>, t: Throwable) {
+            loginRepo.login(login = loginDTO).enqueue(object : Callback<LoginResponseDTO> {
+                override fun onFailure(call: Call<LoginResponseDTO>, t: Throwable) {
                     Toast.makeText(this@LoginActivity, "Post Failed!", Toast.LENGTH_SHORT).show()
                 }
 
-                override fun onResponse(call: Call<LoginDTO>, response: Response<LoginDTO>) {
+                override fun onResponse(call: Call<LoginResponseDTO>, response: Response<LoginResponseDTO>) {
                     Toast.makeText(this@LoginActivity, "Post Succeed", Toast.LENGTH_SHORT).show()
+
+                    val body = response.body()
+                    val userResponse = body!!
 
                     when (response.code()) {
                         401 -> Toast.makeText(
@@ -92,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
                                     putString("Token", token)
                                     apply()
                                 }
-                                sharedPref.edit().putString("UserName", user.email).apply()
+                                sharedPref.edit().putInt("UserId", userResponse.id!!).apply()
                                 val loginIntent =
                                     Intent(applicationContext, NavigationActivity::class.java)
                                 startActivity(loginIntent)

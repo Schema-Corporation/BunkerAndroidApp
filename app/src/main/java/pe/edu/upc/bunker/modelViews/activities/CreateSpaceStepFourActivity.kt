@@ -1,13 +1,22 @@
 package pe.edu.upc.bunker.modelViews.activities
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
 import pe.edu.upc.bunker.R
 import pe.edu.upc.bunker.dbHelper.BunkerDBHelper
 import pe.edu.upc.bunker.dto.createSpace.SpaceCreateDTO
+import pe.edu.upc.bunker.models.Space
+import pe.edu.upc.bunker.repository.RetrofitClientInstance
+import pe.edu.upc.bunker.repository.SpacesRepository
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class CreateSpaceStepFourActivity : AppCompatActivity() {
     private  lateinit var wifiIcon: ImageView
@@ -23,6 +32,8 @@ class CreateSpaceStepFourActivity : AppCompatActivity() {
     private var printStatus: Int = 0
     private var kitchenStatus: Int = 0
     private var waterStatus: Int = 0
+
+    private val spacesRepo = RetrofitClientInstance().getRetrofitInstance().create(SpacesRepository::class.java)
 
     private val dbHandler = BunkerDBHelper(this, null)
 
@@ -168,15 +179,59 @@ class CreateSpaceStepFourActivity : AppCompatActivity() {
 
     private fun createSpace() {
         finishButton.setOnClickListener {
-            dbHandler.addServices(
-                wifiStatus,
-                lightStatus,
-                callStatus,
-                printStatus,
-                kitchenStatus,
-                waterStatus
-            )
+            var listServices = ArrayList<Int>()
+            if (wifiStatus == 1) {
+                listServices.add(1)
+            }
+            if (lightStatus == 1) {
+                listServices.add(2)
+            }
+            if (callStatus == 1) {
+                listServices.add(3)
+            }
+            if (printStatus == 1) {
+                listServices.add(4)
+            }
+            if (kitchenStatus == 1) {
+                listServices.add(5)
+            }
+            if (waterStatus == 1) {
+                listServices.add(6)
+            }
+            dbHandler.addServices(listServices)
+
             spaceCreateDTO = dbHandler.getSpaceFromDb
+
+            val sharedPreferences = this@CreateSpaceStepFourActivity.getSharedPreferences(
+                "Login",
+                Context.MODE_PRIVATE
+            )
+            val token = sharedPreferences.getString("Token", "test")
+
+
+            spacesRepo.postSpace(spaceCreateDTO,token).enqueue(object:Callback<Space>{
+                override fun onFailure(call: Call<Space>, t: Throwable) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onResponse(call: Call<Space>, response: Response<Space>) {
+                    when(response.code()){
+                        201->{
+                            startActivity(Intent(this@CreateSpaceStepFourActivity,NavigationActivity::class.java))
+                            finish()
+                        }
+                        401->{
+                            Snackbar.make(finishButton,"Por favor vuelve a iniciar sesión que tu sesión a expírado",Snackbar.LENGTH_SHORT).show()
+                            startActivity(Intent(this@CreateSpaceStepFourActivity,LoginActivity::class.java))
+                            finish()
+                        }
+                        204->{
+                            Snackbar.make(finishButton,"Ups! Hubo un error. Inténtalo de nuevo",Snackbar.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+
+            })
         }
     }
 }
