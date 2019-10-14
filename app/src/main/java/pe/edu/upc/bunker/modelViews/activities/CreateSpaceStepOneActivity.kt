@@ -112,17 +112,18 @@ class CreateSpaceStepOneActivity : AppCompatActivity() {
                 )
                 val userId = sharedPreferences.getInt("UserId", 0)
                 val token = sharedPreferences.getString("Token", "test")
-                val authorization = "Bearer ${token}"
+                val authorization = "Bearer $token"
 
                 lessorRepo.getLessorByUserId(userId, authorization).enqueue(object: Callback<Lessor> {
                     override fun onFailure(call: Call<Lessor>, t: Throwable) {
                         // Manejar excepción
+                        Log.e("NetworkingError", "Failed Get", t)
                     }
 
                     override fun onResponse(call: Call<Lessor>, response: Response<Lessor>) {
 
-                        var body = response.body()
-                        var lessorId = body!!.id
+                        val body = response.body()
+                        val lessorId = body!!.id
 
                         dbHandler.addFirstStep(
                             height = height.toDouble(),

@@ -12,6 +12,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import pe.edu.upc.bunker.R
 import pe.edu.upc.bunker.dto.LoginDTO
+import pe.edu.upc.bunker.dto.LoginResponseDTO
 import pe.edu.upc.bunker.dto.UserLoginDTO
 import pe.edu.upc.bunker.repository.LoginRepository
 import pe.edu.upc.bunker.repository.RetrofitClientInstance
@@ -96,8 +97,11 @@ class SignUpActivity : AppCompatActivity() {
                                 ).show()
 
                                 loginRepo.login(login = loginDTO)
-                                    .enqueue(object : Callback<LoginDTO> {
-                                        override fun onFailure(call: Call<LoginDTO>, t: Throwable) {
+                                    .enqueue(object : Callback<LoginResponseDTO> {
+                                        override fun onFailure(
+                                            call: Call<LoginResponseDTO>,
+                                            t: Throwable
+                                        ) {
                                             Toast.makeText(
                                                 this@SignUpActivity,
                                                 "Post Failed!",
@@ -106,8 +110,8 @@ class SignUpActivity : AppCompatActivity() {
                                         }
 
                                         override fun onResponse(
-                                            call: Call<LoginDTO>,
-                                            response: Response<LoginDTO>
+                                            call: Call<LoginResponseDTO>,
+                                            response: Response<LoginResponseDTO>
                                         ) {
                                             Toast.makeText(
                                                 this@SignUpActivity,

@@ -206,10 +206,10 @@ class CreateSpaceStepFourActivity : AppCompatActivity() {
                 "Login",
                 Context.MODE_PRIVATE
             )
-            val token = sharedPreferences.getString("Token", "test")
+            val token = sharedPreferences.getString("Token", "test") as String
 
 
-            spacesRepo.postSpace(spaceCreateDTO,token).enqueue(object:Callback<Space>{
+            spacesRepo.postSpace(spaceCreateDTO, "Bearer $token").enqueue(object : Callback<Space> {
                 override fun onFailure(call: Call<Space>, t: Throwable) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }

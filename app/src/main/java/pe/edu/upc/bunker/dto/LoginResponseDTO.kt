@@ -7,7 +7,7 @@ import java.io.Serializable
 class LoginResponseDTO : Serializable {
 
     @Expose
-    var id: Int? = 0
+    var id: Int = 0
 
     @SerializedName("email")
     @Expose

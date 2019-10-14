@@ -39,7 +39,7 @@ class BunkerDBHelper(
                 COLUMN_SERVICE3 + " INTEGER," +
                 COLUMN_SERVICE4 + " INTEGER," +
                 COLUMN_SERVICE5 + " INTEGER," +
-                COLUMN_SERVICE6 + " INTEGER" +
+                COLUMN_SERVICE6 + " INTEGER," +
                 COLUMN_LESSOR_ID + " INTEGER" +
                 ")")
         db?.execSQL(createSpaceTable)
@@ -74,6 +74,7 @@ class BunkerDBHelper(
         values.put(COLUMN_SERVICE4, 0)
         values.put(COLUMN_SERVICE5, 0)
         values.put(COLUMN_SERVICE6, 0)
+        values.put(COLUMN_LESSOR_ID, 0)
         val db = this.writableDatabase
         db.insert(TABLE_NAME, null, values)
         db.close()
@@ -324,7 +325,8 @@ class BunkerDBHelper(
                     spaceCreateDTO.width = cursor.getDouble(cursor.getColumnIndex(COLUMN_WIDTH))
                     spaceCreateDTO.area = cursor.getDouble(cursor.getColumnIndex(COLUMN_AREA))
                     spaceCreateDTO.title = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
-                    spaceCreateDTO.description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION))
+                    spaceCreateDTO.description =
+                        cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION))
 
                     val lessorId = cursor.getInt(cursor.getColumnIndex(COLUMN_LESSOR_ID))
                     val lessorCreateDTO = LessorCreateDTO(lessorId)
@@ -347,7 +349,8 @@ class BunkerDBHelper(
                     val photo5 = cursor.getString(cursor.getColumnIndex(COLUMN_PHOTO5))
                     val photo6 = cursor.getString(cursor.getColumnIndex(COLUMN_PHOTO6))
 
-                    val photosCreateDTO = addPhotosToArray(photo1, photo2, photo3, photo4, photo5, photo6)
+                    val photosCreateDTO =
+                        addPhotosToArray(photo1, photo2, photo3, photo4, photo5, photo6)
 
                     spaceCreateDTO.photos = photosCreateDTO
 
@@ -365,7 +368,6 @@ class BunkerDBHelper(
 
                     spaceCreateDTO.services = serviceList
 
-                    val lessor : LessorCreateDTO = LessorCreateDTO()
                 } while (cursor.moveToNext())
             }
             cursor.close()

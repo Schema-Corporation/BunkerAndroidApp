@@ -60,6 +60,7 @@ class LoginActivity : AppCompatActivity() {
             loginRepo.login(login = loginDTO).enqueue(object : Callback<LoginResponseDTO> {
                 override fun onFailure(call: Call<LoginResponseDTO>, t: Throwable) {
                     Toast.makeText(this@LoginActivity, "Post Failed!", Toast.LENGTH_SHORT).show()
+                    Log.e("NetworkingError", "Post Failed", t)
                 }
 
                 override fun onResponse(call: Call<LoginResponseDTO>, response: Response<LoginResponseDTO>) {
@@ -96,7 +97,8 @@ class LoginActivity : AppCompatActivity() {
                                     putString("Token", token)
                                     apply()
                                 }
-                                sharedPref.edit().putInt("UserId", userResponse.id!!).apply()
+                                val loginResponse = response.body() as LoginResponseDTO
+                                sharedPref.edit().putInt("UserId", loginResponse.id).apply()
                                 val loginIntent =
                                     Intent(applicationContext, NavigationActivity::class.java)
                                 startActivity(loginIntent)
