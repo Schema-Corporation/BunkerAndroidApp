@@ -1,10 +1,8 @@
 package pe.edu.upc.bunker.modelViews.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageView
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
 import pe.edu.upc.bunker.R
@@ -19,7 +17,7 @@ class CreateSpaceStepFourActivity : AppCompatActivity() {
     private  lateinit var kitchenIcon: ImageView
     private  lateinit var waterIcon: ImageView
 
-    private  var wifiStatus: Int = 0
+    private var wifiStatus: Int = 0
     private var lightStatus: Int = 0
     private var callStatus: Int = 0
     private var printStatus: Int = 0
@@ -170,6 +168,14 @@ class CreateSpaceStepFourActivity : AppCompatActivity() {
 
     private fun createSpace() {
         finishButton.setOnClickListener {
+            dbHandler.addServices(
+                wifiStatus,
+                lightStatus,
+                callStatus,
+                printStatus,
+                kitchenStatus,
+                waterStatus
+            )
             spaceCreateDTO = dbHandler.getSpaceFromDb
         }
     }

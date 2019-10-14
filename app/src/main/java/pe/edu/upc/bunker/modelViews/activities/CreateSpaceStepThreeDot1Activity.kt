@@ -4,12 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.database.getBlobOrNull
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import pe.edu.upc.bunker.R
 import pe.edu.upc.bunker.dbHelper.BunkerDBHelper
 
@@ -108,77 +108,47 @@ class CreateSpaceStepThreeDot1Activity : AppCompatActivity() {
         when (requestCode) {
             1 -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    //val bitmapOriginal = data?.getParcelableExtra<Bitmap>("photoOriginal")
-                    val bitmapThumbnail = data?.getParcelableExtra<Bitmap>("photoThumbnail")
                     val rotationDegree: Float = data?.getFloatExtra("rotationDegree", 0f) as Float
-                    when {
-                        bitmap1Thumbnail == null -> {
-                            //bitmap1Original=bitmapOriginal
-                            bitmap1Thumbnail = bitmapThumbnail
-                            photo1Button.setImageBitmap(bitmap1Thumbnail)
+                    val dbHandler = BunkerDBHelper(this, null)
+                    val cursor = dbHandler.getAllSpaces()
+                    cursor!!.moveToFirst()
+                    val photoURL1 =
+                        cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO1))
+                    val photoURL2 =
+                        cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO2))
+                    val photoURL3 =
+                        cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO3))
+                    val photoURL4 =
+                        cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO4))
+                    val photoURL5 =
+                        cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO5))
+                    val photoURL6 =
+                        cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO6))
+                    if (photoURL1.isNotBlank()) {
+                        Picasso.get().load(photoURL1).fit().into(photo1Button)
                             photo1Button.rotation = rotationDegree
-
-                            val params = photo1Button.layoutParams
-                            params.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                            params.width = ViewGroup.LayoutParams.WRAP_CONTENT
-                            photo1Button.layoutParams = params
                         }
-                        bitmap2Thumbnail == null -> {
-                            //bitmap2Original=bitmapOriginal
-                            bitmap2Thumbnail = bitmapThumbnail
-                            photo2Button.setImageBitmap(bitmap2Thumbnail)
+                    if (photoURL2.isNotBlank()) {
+                        Picasso.get().load(photoURL2).fit().into(photo2Button)
                             photo2Button.rotation = rotationDegree
-
-                            val params = photo2Button.layoutParams
-                            params.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                            params.width = ViewGroup.LayoutParams.WRAP_CONTENT
-                            photo2Button.layoutParams = params
                         }
-                        bitmap3Thumbnail == null -> {
-                            //bitmap3Original=bitmapOriginal
-                            bitmap3Thumbnail = bitmapThumbnail
-                            photo3Button.setImageBitmap(bitmap3Thumbnail)
+                    if (photoURL3.isNotBlank()) {
+                        Picasso.get().load(photoURL3).fit().into(photo3Button)
                             photo3Button.rotation = rotationDegree
-
-                            val params = photo3Button.layoutParams
-                            params.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                            params.width = ViewGroup.LayoutParams.WRAP_CONTENT
-                            photo3Button.layoutParams = params
                         }
-                        bitmap4Thumbnail == null -> {
-                            //bitmap4Original=bitmapOriginal
-                            bitmap4Thumbnail = bitmapThumbnail
-                            photo4Button.setImageBitmap(bitmap4Thumbnail)
+                    if (photoURL4.isNotBlank()) {
+                        Picasso.get().load(photoURL4).fit().into(photo4Button)
                             photo4Button.rotation = rotationDegree
-
-                            val params = photo4Button.layoutParams
-                            params.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                            params.width = ViewGroup.LayoutParams.WRAP_CONTENT
-                            photo4Button.layoutParams = params
                         }
-                        bitmap5Thumbnail == null -> {
-                            //bitmap5Original=bitmapOriginal
-                            bitmap5Thumbnail = bitmapThumbnail
-                            photo5Button.setImageBitmap(bitmap5Thumbnail)
+                    if (photoURL5.isNotBlank()) {
+                        Picasso.get().load(photoURL5).fit().into(photo5Button)
                             photo5Button.rotation = rotationDegree
-
-                            val params = photo5Button.layoutParams
-                            params.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                            params.width = ViewGroup.LayoutParams.WRAP_CONTENT
-                            photo5Button.layoutParams = params
                         }
-                        bitmap6Thumbnail == null -> {
-                            //bitmap6Original=bitmapOriginal
-                            bitmap6Thumbnail = bitmapThumbnail
-                            photo6Button.setImageBitmap(bitmap6Thumbnail)
+                    if (photoURL6.isNotBlank()) {
+                        Picasso.get().load(photoURL6).fit().into(photo6Button)
                             photo6Button.rotation = rotationDegree
-
-                            val params = photo6Button.layoutParams
-                            params.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                            params.width = ViewGroup.LayoutParams.WRAP_CONTENT
-                            photo6Button.layoutParams = params
                         }
-                    }
+
                 }
             }
         }

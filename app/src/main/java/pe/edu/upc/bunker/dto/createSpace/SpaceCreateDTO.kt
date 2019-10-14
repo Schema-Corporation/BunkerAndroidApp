@@ -21,14 +21,14 @@ data class SpaceCreateDTO(
     var location: LocationCreateDTO?= LocationCreateDTO(),
 
     @Expose
-    var photos: List<PhotoCreateDTO>?= ArrayList<PhotoCreateDTO>(),
+    var photos: List<PhotoCreateDTO>? = ArrayList(),
 
     @SerializedName("rent_price")
     @Expose
     var rentPrice: Double?= 0.0,
 
     @Expose
-    var services: List<ServiceCreateDTO>?= ArrayList<ServiceCreateDTO>(),
+    var services: List<ServiceCreateDTO>? = ArrayList(),
 
     @SerializedName("space_type")
     @Expose

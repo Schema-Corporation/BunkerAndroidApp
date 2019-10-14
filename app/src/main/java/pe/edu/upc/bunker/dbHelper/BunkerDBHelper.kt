@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import pe.edu.upc.bunker.dto.createSpace.LocationCreateDTO
 import pe.edu.upc.bunker.dto.createSpace.PhotoCreateDTO
+import pe.edu.upc.bunker.dto.createSpace.ServiceCreateDTO
 import pe.edu.upc.bunker.dto.createSpace.SpaceCreateDTO
 
 class BunkerDBHelper(
@@ -220,22 +221,22 @@ class BunkerDBHelper(
 
         val photos = ArrayList<String>()
 
-        if (photo1 != null) {
+        if (photo1.isNotBlank()) {
             photos.add(photo1)
         }
-        if (photo2 != null) {
+        if (photo2.isNotBlank()) {
             photos.add(photo2)
         }
-        if (photo3 != null) {
+        if (photo3.isNotBlank()) {
             photos.add(photo3)
         }
-        if (photo4 != null) {
+        if (photo4.isNotBlank()) {
             photos.add(photo4)
         }
-        if (photo5 != null) {
+        if (photo5.isNotBlank()) {
             photos.add(photo5)
         }
-        if (photo6 != null) {
+        if (photo6.isNotBlank()) {
             photos.add(photo6)
         }
 
@@ -261,9 +262,28 @@ class BunkerDBHelper(
         return locationCreateDTO
     }
 
+    private fun addServiceData(
+        service1: Int,
+        service2: Int,
+        service3: Int,
+        service4: Int,
+        service5: Int,
+        service6: Int
+    ): ArrayList<ServiceCreateDTO> {
+        val serviceList = ArrayList<ServiceCreateDTO>()
+        serviceList.add(ServiceCreateDTO(service1))
+        serviceList.add(ServiceCreateDTO(service2))
+        serviceList.add(ServiceCreateDTO(service3))
+        serviceList.add(ServiceCreateDTO(service4))
+        serviceList.add(ServiceCreateDTO(service5))
+        serviceList.add(ServiceCreateDTO(service6))
+
+        return serviceList
+    }
+
     val getSpaceFromDb: SpaceCreateDTO
         get() {
-            var spaceCreateDTO = SpaceCreateDTO()
+            val spaceCreateDTO = SpaceCreateDTO()
 
             val findSpaceQuery = "SELECT * FROM $TABLE_NAME"
             val db = this.writableDatabase
@@ -298,12 +318,22 @@ class BunkerDBHelper(
                     val photosCreateDTO = addPhotosToArray(photo1, photo2, photo3, photo4, photo5, photo6)
 
                     spaceCreateDTO.photos = photosCreateDTO
+                    // Step 4
+                    val service1 = cursor.getInt(cursor.getColumnIndex(COLUMN_SERVICE1))
+                    val service2 = cursor.getInt(cursor.getColumnIndex(COLUMN_SERVICE2))
+                    val service3 = cursor.getInt(cursor.getColumnIndex(COLUMN_SERVICE3))
+                    val service4 = cursor.getInt(cursor.getColumnIndex(COLUMN_SERVICE4))
+                    val service5 = cursor.getInt(cursor.getColumnIndex(COLUMN_SERVICE5))
+                    val service6 = cursor.getInt(cursor.getColumnIndex(COLUMN_SERVICE6))
 
+                    val serviceList =
+                        addServiceData(service1, service2, service3, service4, service5, service6)
 
-
+                    spaceCreateDTO.services = serviceList
                 } while (cursor.moveToNext())
             }
-
+            cursor.close()
+            db.close()
             return spaceCreateDTO
         }
 
