@@ -40,7 +40,8 @@ class BunkerDBHelper(
                 COLUMN_SERVICE4 + " INTEGER," +
                 COLUMN_SERVICE5 + " INTEGER," +
                 COLUMN_SERVICE6 + " INTEGER," +
-                COLUMN_LESSOR_ID + " INTEGER" +
+                COLUMN_LESSOR_ID + " INTEGER," +
+                COLUMN_PRICE + " DECIMAL" +
                 ")")
         db?.execSQL(createSpaceTable)
     }
@@ -75,6 +76,7 @@ class BunkerDBHelper(
         values.put(COLUMN_SERVICE5, 0)
         values.put(COLUMN_SERVICE6, 0)
         values.put(COLUMN_LESSOR_ID, 0)
+        values.put(COLUMN_PRICE, 0.0)
         val db = this.writableDatabase
         db.insert(TABLE_NAME, null, values)
         db.close()
@@ -104,7 +106,7 @@ class BunkerDBHelper(
         area: Double,
         spaceType: Int,
         title: String,
-        description: String,
+        price: String,
         lessorId: Int
     ) {
         val values = ContentValues()
@@ -113,7 +115,7 @@ class BunkerDBHelper(
         values.put(COLUMN_AREA, area)
         values.put(COLUMN_SPACE_TYPE, spaceType)
         values.put(COLUMN_TITLE, title)
-        values.put(COLUMN_DESCRIPTION, description)
+        values.put(COLUMN_PRICE, price)
         values.put(COLUMN_LESSOR_ID, lessorId)
         val db = this.writableDatabase
         db.update(TABLE_NAME, values, "id = 1", null)
@@ -190,8 +192,9 @@ class BunkerDBHelper(
         db.close()
     }
 
-    fun addServices(
-        lstServices:List<Int>
+    fun addFourthStep(
+        lstServices: List<Int>,
+        description: String
     ) {
         val values = ContentValues()
         for (service in lstServices)
@@ -221,6 +224,7 @@ class BunkerDBHelper(
                 values.put(COLUMN_SERVICE6, service)
             }
         }
+        values.put(COLUMN_DESCRIPTION, description)
         val db = this.writableDatabase
         db.update(TABLE_NAME, values, "id = 1", null)
         db.close()
@@ -402,5 +406,6 @@ class BunkerDBHelper(
         const val COLUMN_SERVICE5 = "service5"
         const val COLUMN_SERVICE6 = "service6"
         const val COLUMN_LESSOR_ID = "lessorId"
+        const val COLUMN_PRICE = "price"
     }
 }
