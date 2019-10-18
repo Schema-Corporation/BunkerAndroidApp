@@ -54,4 +54,6 @@
     <string name="tipo_de_espacio">Tipo de Espacio:</string>
     <string name="detalles_del_espacio">Detalles del Espacio</string>
     <string name="estado">Estado:</string>
+    <string name="home_fragment_title">Mis Espacios</string>
+    <string name="price_label">Precio</string>
 </resources>

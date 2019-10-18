@@ -28,7 +28,7 @@ class CreateSpaceStepOneActivity : AppCompatActivity() {
     private lateinit var areaEditText: TextInputEditText
     private lateinit var spaceTypeTextView: AutoCompleteTextView
     private lateinit var titleEditText: TextInputEditText
-    private lateinit var descriptionEditText: TextInputEditText
+    private lateinit var priceEditText: TextInputEditText
     private val dbHandler = BunkerDBHelper(this, null)
 
     private val spaceTypes = arrayOf("Oficina", "Espacio de trabajo", "Almacén")
@@ -53,7 +53,7 @@ class CreateSpaceStepOneActivity : AppCompatActivity() {
         spaceTypeTextView = findViewById(R.id.space_type_dropdown)
         spaceTypeTextView.setAdapter(dropdownListAdapter)
         titleEditText = findViewById(R.id.input_title_edit_text)
-        descriptionEditText = findViewById(R.id.input_description_edit_text)
+        priceEditText = findViewById(R.id.price_text_input_edit)
         nextStepButton = findViewById(R.id.step_2_next_button)
         pressNextStepButton()
     }
@@ -63,7 +63,7 @@ class CreateSpaceStepOneActivity : AppCompatActivity() {
 
             val width = widthEditText.text.toString()
             text_input_width.error = null
-            if (width.isNullOrEmpty()) {
+            if (width.isEmpty()) {
                 text_input_width.error = "Este campo es requerido"
             } else if (width.toInt() < 0) {
                 text_input_width.error = "Este campo no puede ser negativo"
@@ -77,32 +77,32 @@ class CreateSpaceStepOneActivity : AppCompatActivity() {
             }
             val height = heightEditText.text.toString()
             text_input_height.error = null
-            if (height.isNullOrEmpty()) {
+            if (height.isEmpty()) {
                 text_input_height.error = "Este campo es requerido"
             } else if (height.toInt() < 0) {
                 text_input_height.error = "Este campo no puede ser negativo"
             }
             val area = areaEditText.text.toString()
             text_input_area.error = null
-            if (area.isNullOrEmpty()) {
+            if (area.isEmpty()) {
                 text_input_area.error = "Este campo es requerido"
             } else if (area.toInt() < 0) {
                 text_input_area.error = "Este campo no puede ser negativo"
             }
             val title = titleEditText.text.toString()
-            if (title.isNullOrEmpty()) {
+            if (title.isEmpty()) {
                 text_input_title.error = "Este campo es requerido"
             }
-            text_input_description.error = null
-            val description = descriptionEditText.text.toString()
-            if (description.isNullOrEmpty()) {
-                text_input_description.error = "Este campo es requerido"
+            priceEditText.error = null
+            val price = priceEditText.text.toString()
+            if (price.isEmpty()) {
+                price_input_layout.error = "Este campo es requerido"
             }
             if (text_input_width.error.isNullOrEmpty() &&
                 text_input_height.error.isNullOrEmpty() &&
                 text_input_area.error.isNullOrEmpty() &&
                 text_input_title.error.isNullOrEmpty() &&
-                text_input_description.error.isNullOrEmpty()
+                price_input_layout.error.isNullOrEmpty()
             ) {
                 dbHandler.startSpace()
 
@@ -112,25 +112,24 @@ class CreateSpaceStepOneActivity : AppCompatActivity() {
                 )
                 val userId = sharedPreferences.getInt("UserId", 0)
                 val token = sharedPreferences.getString("Token", "test")
+                Log.d("NetworkingDebug", token)
                 val authorization = "Bearer $token"
 
                 lessorRepo.getLessorByUserId(userId, authorization).enqueue(object: Callback<Lessor> {
                     override fun onFailure(call: Call<Lessor>, t: Throwable) {
-                        // Manejar excepción
                         Log.e("NetworkingError", "Failed Get", t)
                     }
-
                     override fun onResponse(call: Call<Lessor>, response: Response<Lessor>) {
+                        Log.d("NetworkingDebug", call.request().body().toString())
 
                         val body = response.body()
                         val lessorId = body!!.id
-
                         dbHandler.addFirstStep(
                             height = height.toDouble(),
                             width = width.toDouble(),
                             area = area.toDouble(),
                             spaceType = spaceType,
-                            description = description,
+                            price = price,
                             title = title,
                             lessorId = lessorId
                         )

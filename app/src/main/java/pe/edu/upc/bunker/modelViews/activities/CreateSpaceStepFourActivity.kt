@@ -3,11 +3,14 @@ package pe.edu.upc.bunker.modelViews.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_create_space_step_four.*
 import pe.edu.upc.bunker.R
 import pe.edu.upc.bunker.dbHelper.BunkerDBHelper
 import pe.edu.upc.bunker.dto.createSpace.SpaceCreateDTO
@@ -25,6 +28,7 @@ class CreateSpaceStepFourActivity : AppCompatActivity() {
     private  lateinit var printIcon: ImageView
     private  lateinit var kitchenIcon: ImageView
     private  lateinit var waterIcon: ImageView
+    private lateinit var descriptionEditText: EditText
 
     private var wifiStatus: Int = 0
     private var lightStatus: Int = 0
@@ -51,6 +55,7 @@ class CreateSpaceStepFourActivity : AppCompatActivity() {
         printIcon = findViewById(R.id.step_4_print_icon)
         kitchenIcon = findViewById(R.id.step_4_kitchen_icon)
         waterIcon = findViewById(R.id.step_4_water_icon)
+        descriptionEditText = findViewById(R.id.description_input_edit_text)
 
         spaceCreateDTO = SpaceCreateDTO()
 
@@ -179,7 +184,7 @@ class CreateSpaceStepFourActivity : AppCompatActivity() {
 
     private fun createSpace() {
         finishButton.setOnClickListener {
-            var listServices = ArrayList<Int>()
+            val listServices = ArrayList<Int>()
             if (wifiStatus == 1) {
                 listServices.add(1)
             }
@@ -198,40 +203,67 @@ class CreateSpaceStepFourActivity : AppCompatActivity() {
             if (waterStatus == 1) {
                 listServices.add(6)
             }
-            dbHandler.addServices(listServices)
 
-            spaceCreateDTO = dbHandler.getSpaceFromDb
+            val description = descriptionEditText.text.toString()
+            if (description.isEmpty()) {
+                description_input_layout.error = "Este campo es requerido"
+            }
+            if (description_input_layout.error == null) {
+                dbHandler.addFourthStep(listServices, description)
 
-            val sharedPreferences = this@CreateSpaceStepFourActivity.getSharedPreferences(
-                "Login",
-                Context.MODE_PRIVATE
-            )
-            val token = sharedPreferences.getString("Token", "test") as String
+                spaceCreateDTO = dbHandler.getSpaceFromDb
+
+                val sharedPreferences = this@CreateSpaceStepFourActivity.getSharedPreferences(
+                    "Login",
+                    Context.MODE_PRIVATE
+                )
+                val token = sharedPreferences.getString("Token", "test") as String
 
 
-            spacesRepo.postSpace(spaceCreateDTO, "Bearer $token").enqueue(object : Callback<Space> {
-                override fun onFailure(call: Call<Space>, t: Throwable) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                }
-
-                override fun onResponse(call: Call<Space>, response: Response<Space>) {
-                    when(response.code()){
-                        201->{
-                            startActivity(Intent(this@CreateSpaceStepFourActivity,NavigationActivity::class.java))
-                            finish()
+                spacesRepo.postSpace(spaceCreateDTO, "Bearer $token")
+                    .enqueue(object : Callback<Space> {
+                        override fun onFailure(call: Call<Space>, t: Throwable) {
+                            Log.e("NetworkingError", "Post Failed", t)
                         }
-                        401->{
-                            Snackbar.make(finishButton,"Por favor vuelve a iniciar sesión que tu sesión a expírado",Snackbar.LENGTH_SHORT).show()
-                            startActivity(Intent(this@CreateSpaceStepFourActivity,LoginActivity::class.java))
-                            finish()
-                        }
-                        204->{
-                            Snackbar.make(finishButton,"Ups! Hubo un error. Inténtalo de nuevo",Snackbar.LENGTH_SHORT).show()
-                        }
-                    }
-                }
 
-            })
+                        override fun onResponse(call: Call<Space>, response: Response<Space>) {
+                            when (response.code()) {
+                                201 -> {
+                                    startActivity(
+                                        Intent(
+                                            this@CreateSpaceStepFourActivity,
+                                            NavigationActivity::class.java
+                                        )
+                                    )
+                                    finish()
+                                }
+                                401 -> {
+                                    Snackbar.make(
+                                        finishButton,
+                                        "Por favor vuelve a iniciar sesión que tu sesión a expírado",
+                                        Snackbar.LENGTH_SHORT
+                                    ).show()
+                                    startActivity(
+                                        Intent(
+                                            this@CreateSpaceStepFourActivity,
+                                            LoginActivity::class.java
+                                        )
+                                    )
+                                    finish()
+                                }
+                                204 -> {
+                                    Snackbar.make(
+                                        finishButton,
+                                        "Ups! Hubo un error. Inténtalo de nuevo",
+                                        Snackbar.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                        }
+
+                    })
+            }
+
         }
     }
 }
