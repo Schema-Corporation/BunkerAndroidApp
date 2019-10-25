@@ -2,12 +2,14 @@ package pe.edu.upc.bunker.modelViews.activities
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import pe.edu.upc.bunker.R
 import pe.edu.upc.bunker.dto.LoginDTO
@@ -22,10 +24,10 @@ import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
 
-    lateinit var loginButton: Button
-    lateinit var userNameEditText: TextInputEditText
-    lateinit var passwordEditText: TextInputEditText
-    lateinit var signupLink: TextView
+    private lateinit var loginButton: Button
+    private lateinit var userNameEditText: TextInputEditText
+    private lateinit var passwordEditText: TextInputEditText
+    private lateinit var signUpLink: TextView
     private lateinit var loginDTO: LoginDTO
     private lateinit var user: UserLoginDTO
 
@@ -38,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
 
         userNameEditText = findViewById(R.id.user_field_edit_text)
         passwordEditText = findViewById(R.id.password_field_edit_text)
-        signupLink = findViewById(R.id.register_link)
+        signUpLink = findViewById(R.id.register_link)
 
         loginButton = findViewById(R.id.login_button)
         pushButton()
@@ -63,24 +65,24 @@ class LoginActivity : AppCompatActivity() {
                     Log.e("NetworkingError", "Post Failed", t)
                 }
 
-                override fun onResponse(call: Call<LoginResponseDTO>, response: Response<LoginResponseDTO>) {
+                override fun onResponse(
+                    call: Call<LoginResponseDTO>,
+                    response: Response<LoginResponseDTO>
+                ) {
                     Toast.makeText(this@LoginActivity, "Post Succeed", Toast.LENGTH_SHORT).show()
 
-                    val body = response.body()
-                    val userResponse = body!!
-
                     when (response.code()) {
-                        401 -> Toast.makeText(
-                            this@LoginActivity,
-                            "Password/Username not match",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        401 -> Snackbar.make(
+                            loginButton,
+                            "Usuario/Contraseña Incorrecto",
+                            Snackbar.LENGTH_SHORT
+                        ).setTextColor(Color.RED).show()
                         200 -> {
-                            Toast.makeText(
-                                this@LoginActivity,
-                                "Credentials confirmed",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Snackbar.make(
+                                loginButton,
+                                "Inicio de sesión exitoso",
+                                Snackbar.LENGTH_SHORT
+                            ).setTextColor(Color.GREEN).show()
 
                             val headers = response.headers()
                             val rawToken = headers.get("Authorization")
@@ -91,7 +93,10 @@ class LoginActivity : AppCompatActivity() {
                                 val token = lstToken[1]
                                 Log.d("Debug", "Token: $token")
                                 val sharedPref =
-                                    this@LoginActivity.getSharedPreferences("Login", Context.MODE_PRIVATE)
+                                    this@LoginActivity.getSharedPreferences(
+                                        "Login",
+                                        Context.MODE_PRIVATE
+                                    )
                                         ?: return
                                 with(sharedPref.edit()) {
                                     putString("Token", token)
@@ -99,17 +104,14 @@ class LoginActivity : AppCompatActivity() {
                                 }
                                 val loginResponse = response.body() as LoginResponseDTO
                                 sharedPref.edit().putInt("UserId", loginResponse.id).apply()
+
                                 val loginIntent =
                                     Intent(applicationContext, NavigationActivity::class.java)
                                 startActivity(loginIntent)
                                 finish()
                             }
                         }
-                        else -> Toast.makeText(
-                            this@LoginActivity,
-                            "Some other status",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        else -> Log.d("NetworkingDebug", "Not mapped Error")
                     }
                 }
             })
@@ -117,9 +119,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun signUpButton() {
-        signupLink.setOnClickListener {
+        signUpLink.setOnClickListener {
             Log.d("Debug", "Sign-Up Button Pressed")
-
             val signUpIntent = Intent(applicationContext, SignUpActivity::class.java)
             startActivity(signUpIntent)
             finish()

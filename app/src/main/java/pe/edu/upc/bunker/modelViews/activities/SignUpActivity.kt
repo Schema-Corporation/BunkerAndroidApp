@@ -2,12 +2,14 @@ package pe.edu.upc.bunker.modelViews.activities
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import pe.edu.upc.bunker.R
@@ -90,10 +92,10 @@ class SignUpActivity : AppCompatActivity() {
                         Log.d("Debug", "Response Code: ${response.code()}")
                         when (response.code()) {
                             200 -> {
-                                Toast.makeText(
-                                    this@SignUpActivity,
-                                    "SignUp Confirmed",
-                                    Toast.LENGTH_SHORT
+                                Snackbar.make(
+                                    signUpButton,
+                                    "Se ha validado correctamente su registro",
+                                    Snackbar.LENGTH_SHORT
                                 ).show()
 
                                 loginRepo.login(login = loginDTO)
@@ -102,36 +104,28 @@ class SignUpActivity : AppCompatActivity() {
                                             call: Call<LoginResponseDTO>,
                                             t: Throwable
                                         ) {
-                                            Toast.makeText(
-                                                this@SignUpActivity,
-                                                "Post Failed!",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                                            Snackbar.make(
+                                                signUpButton,
+                                                "Verifique si tiene conexión a Internet",
+                                                Snackbar.LENGTH_SHORT
+                                            ).setTextColor(Color.RED).show()
+                                            Log.e("NetworkingError", "Login Failed", t)
                                         }
 
                                         override fun onResponse(
                                             call: Call<LoginResponseDTO>,
                                             response: Response<LoginResponseDTO>
                                         ) {
-                                            Toast.makeText(
-                                                this@SignUpActivity,
-                                                "Post Succeed",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                                            Log.d("Login", "Login successful")
 
                                             when (response.code()) {
-                                                401 -> Toast.makeText(
-                                                    this@SignUpActivity,
-                                                    "Password/Username not match",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
+                                                401 -> {
+                                                    Log.e(
+                                                        "NetworkingError",
+                                                        "Somehow register was unauthorized"
+                                                    )
+                                                }
                                                 200 -> {
-                                                    Toast.makeText(
-                                                        this@SignUpActivity,
-                                                        "Credentials confirmed",
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
-
                                                     val headers = response.headers()
                                                     val rawToken = headers.get("Authorization")
                                                     if (rawToken == null) {
@@ -152,7 +146,6 @@ class SignUpActivity : AppCompatActivity() {
                                                             putString("Token", token)
                                                             apply()
                                                         }
-
                                                         val loginIntent =
                                                             Intent(
                                                                 applicationContext,

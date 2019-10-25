@@ -3,6 +3,7 @@ package pe.edu.upc.bunker.models
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import pe.edu.upc.bunker.dto.UserLoginDTO
 
 data class Lessor(
     @SerializedName("commercial_name")
@@ -15,7 +16,7 @@ data class Lessor(
 
     @SerializedName("doc_number")
     @Expose
-    val docNumber: Any,
+    val docNumber: String,
 
     @SerializedName("doc_type")
     @Expose
@@ -46,5 +47,5 @@ data class Lessor(
     val updatedAt: String,
 
     @Expose
-    val user: User
+    val user: UserLoginDTO
 )

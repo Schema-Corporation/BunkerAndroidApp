@@ -56,4 +56,5 @@
     <string name="estado">Estado:</string>
     <string name="home_fragment_title">Mis Espacios</string>
     <string name="price_label">Precio</string>
+    <string name="form_title">Registra tus datos</string>
 </resources>

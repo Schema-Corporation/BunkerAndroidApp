@@ -161,7 +161,7 @@
                                 android:backgroundTint="@color/places_text_white_alpha_26"
                                 android:fontFamily="bold"
                                 android:hint="@string/width_placeholder"
-                                android:inputType="numberSigned"
+                                android:inputType="text"
                                 android:maxLines="1"
                                 android:textSize="16sp" />
                         </com.google.android.material.textfield.TextInputLayout>

@@ -23,8 +23,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".modelViews.activities.CreateSpaceStepThreeDot1Activity"></activity>
-        <activity android:name=".modelViews.activities.SpaceDetailsActivity"></activity>
+        <activity android:name=".modelViews.activities.LessorFormActivity"></activity>
+        <activity android:name=".modelViews.activities.CreateSpaceStepThreeDot1Activity" />
+        <activity android:name=".modelViews.activities.SpaceDetailsActivity" />
         <activity
             android:name=".modelViews.activities.CreateSpaceStepThreeActivity"
             android:screenOrientation="portrait" />
