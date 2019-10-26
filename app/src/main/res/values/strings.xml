@@ -57,4 +57,20 @@
     <string name="home_fragment_title">Mis Espacios</string>
     <string name="price_label">Precio</string>
     <string name="form_title">Registra tus datos</string>
+    <string name="commercial_name">Nombre Comercial:</string>
+    <string name="ruc_placeholder">RUC</string>
+    <string name="commercial_name_placeholder">Nombre Comercial</string>
+    <string name="names">Nombres:</string>
+    <string name="names_placeholder">Nombres</string>
+    <string name="last_names">Apellidos:</string>
+    <string name="last_names_placeholder">Apellidos</string>
+    <string name="doc_type_placeholder">Tipo de Documento</string>
+    <string name="doc_type">Tipo de Documento:</string>
+    <string name="doc_num">Número de Documento:</string>
+    <string name="doc_num_placeholder">Número de Documento</string>
+    <string name="cel_number">Número de Celular:</string>
+    <string name="cel_number_placeholder">Número de Celular</string>
+    <string name="ruc">RUC:</string>
+    <string name="accept_terms_conditions">Acepto los Términos y Condiciones</string>
+    <string name="registrar">REGISTRAR</string>
 </resources>
