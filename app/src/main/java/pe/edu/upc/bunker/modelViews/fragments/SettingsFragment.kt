@@ -3,6 +3,7 @@ package pe.edu.upc.bunker.modelViews.fragments
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -21,6 +22,7 @@ import retrofit2.Response
 class SettingsFragment : Fragment() {
 
     private lateinit var logoutCardView: MaterialCardView
+    private lateinit var termsConditionsCardView: MaterialCardView
 
     private val loginRepo =
         RetrofitClientInstance().getRetrofitInstance().create(LoginRepository::class.java)
@@ -33,7 +35,9 @@ class SettingsFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
         logoutCardView=view.findViewById(R.id.logout_card_view)
+        termsConditionsCardView = view.findViewById(R.id.tyc_card_view)
 
+        termsConditions(view)
         logout(view)
         return view
     }
@@ -45,7 +49,7 @@ class SettingsFragment : Fragment() {
             val token = sharedPreferences?.getString("Token", "")
             loginRepo.logout(authorization = token!!).enqueue(object : Callback<Void>{
                 override fun onFailure(call: Call<Void>, t: Throwable) {
-                    Toast.makeText(activity, "Log FAILED", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, "Failed to Log Out", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
@@ -55,6 +59,16 @@ class SettingsFragment : Fragment() {
             })
             view.context.startActivity(Intent(view.context, LoginActivity::class.java))
         }
+    }
+
+    private fun termsConditions(view: View){
+        termsConditionsCardView.setOnClickListener{
+            val termsCon = Intent(Intent.ACTION_VIEW, Uri.parse("https://firebasestorage.googleapis.com/v0/b/bunker-253200.appspot.com/o/t%26c%2FTerminos_y_Condiciones_Bunker.pdf?alt=media&token=87383a55-1ec9-4996-8847-9980072e8984"))
+            startActivity(termsCon)
+        }
+
+
+
     }
 
 }

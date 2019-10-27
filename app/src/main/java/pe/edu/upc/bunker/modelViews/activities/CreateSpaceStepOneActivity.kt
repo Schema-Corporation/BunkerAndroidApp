@@ -63,9 +63,9 @@ class CreateSpaceStepOneActivity : AppCompatActivity() {
         titleEditText = findViewById(R.id.input_title_edit_text)
         priceEditText = findViewById(R.id.price_text_input_edit)
         nextStepButton = findViewById(R.id.step_2_next_button)
-        keyPressedLength(widthEditText, 3)
-        keyPressedLength(heightEditText, 3)
-        keyPressedLength(areaEditText, 4)
+        //keyPressedLength(widthEditText, 3)
+        //keyPressedLength(heightEditText, 3)
+        //keyPressedLength(areaEditText, 4)
         pressNextStepButton()
     }
 
@@ -119,12 +119,13 @@ class CreateSpaceStepOneActivity : AppCompatActivity() {
 
                 val sharedPreferences = this@CreateSpaceStepOneActivity.getSharedPreferences(
                     "Login",
-                    Context.MODE_PRIVATE
+                            Context.MODE_PRIVATE
                 )
                 val userId = sharedPreferences.getInt("UserId", 0)
                 val token = sharedPreferences.getString("Token", "test")
                 Log.d("NetworkingDebug", token)
                 val authorization = "Bearer $token"
+
 
                 lessorRepo.getLessorByUserId(userId, authorization)
                     .enqueue(object : Callback<Lessor> {
@@ -134,6 +135,10 @@ class CreateSpaceStepOneActivity : AppCompatActivity() {
 
                         override fun onResponse(call: Call<Lessor>, response: Response<Lessor>) {
                             Log.d("NetworkingDebug", call.request().body().toString())
+
+                            //height.split("M2")
+                            //width.split("M2")
+                            //area.split("M2")
 
                             val body = response.body()
                             val lessorId = body!!.id

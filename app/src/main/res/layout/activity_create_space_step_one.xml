@@ -144,6 +144,16 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            app:layout_constraintEnd_toEndOf="@id/text_input_width"
+                            app:layout_constraintTop_toTopOf="@id/text_input_width"
+                            app:layout_constraintBottom_toBottomOf="@id/text_input_width"
+                            android:layout_marginEnd="20dp"
+                            android:src="@drawable/ic_meter"
+                            />
+
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/text_input_width"
                             android:layout_width="200dp"
@@ -175,7 +185,16 @@
                             android:src="@drawable/ic_panorama_vertical_black_24dp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/width_icon"
+                            />
 
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            app:layout_constraintEnd_toEndOf="@id/text_input_height"
+                            app:layout_constraintTop_toTopOf="@id/text_input_height"
+                            app:layout_constraintBottom_toBottomOf="@id/text_input_height"
+                            android:layout_marginEnd="20dp"
+                            android:src="@drawable/ic_meter"
                             />
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -209,6 +228,16 @@
                             android:src="@drawable/ic_dashboard_black_24dp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/height_icon" />
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            app:layout_constraintEnd_toEndOf="@id/text_input_area"
+                            app:layout_constraintTop_toTopOf="@id/text_input_area"
+                            app:layout_constraintBottom_toBottomOf="@id/text_input_area"
+                            android:layout_marginEnd="20dp"
+                            android:src="@drawable/ic_sq_meter"
+                            />
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/text_input_area"
