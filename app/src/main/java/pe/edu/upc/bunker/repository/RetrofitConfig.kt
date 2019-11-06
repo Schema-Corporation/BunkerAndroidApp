@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitClientInstance {
     companion object {
-        private const val BASE_URL = "https://bunker-253200.appspot.com/"
+        private const val BASE_URL = "https://bunker-258012.appspot.com/"
         private lateinit var retrofit : Retrofit
     }
 

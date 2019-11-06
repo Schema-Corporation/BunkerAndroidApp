@@ -3,6 +3,7 @@ package pe.edu.upc.bunker.modelViews.fragments
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -75,14 +76,17 @@ class HomeFragment : Fragment() {
 
             override fun onResponse(call: Call<List<SpaceInfoDTO>>, response: Response<List<SpaceInfoDTO>>) {
                 val body = response.body()
+                if(body != null) {
+                    if (body.isNotEmpty()) {
+                        listSpacesInfo = body
 
-                if (body!!.isNotEmpty()) {
-                    listSpacesInfo = body
+                        spacesAdapter = SpacesAdapter(listSpacesInfo)
 
-                    spacesAdapter = SpacesAdapter(listSpacesInfo)
-
-                    spacesRecyclerView.adapter = spacesAdapter
-                    spacesRecyclerView.layoutManager = spacesLayoutManager
+                        spacesRecyclerView.adapter = spacesAdapter
+                        spacesRecyclerView.layoutManager = spacesLayoutManager
+                    }
+                }else{
+                    Log.d("Networking",call.request().url().toString())
                 }
             }
 
