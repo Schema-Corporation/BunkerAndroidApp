@@ -53,7 +53,7 @@ class CreateSpaceStepThreeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_space_step_three)
 
-        fabCamera = findViewById(R.id.fab_camera)
+        fabCamera = this.findViewById(R.id.fab_camera)
         fabSwitchCamera = findViewById(R.id.fab_switch_camera)
         fabFlash = findViewById(R.id.fab_flash)
         previewImageButton = findViewById(R.id.preview_photo_image_button_view)
