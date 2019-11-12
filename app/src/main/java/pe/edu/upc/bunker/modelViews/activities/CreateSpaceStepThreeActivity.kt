@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import io.fotoapparat.Fotoapparat
 import io.fotoapparat.configuration.CameraConfiguration
@@ -48,11 +49,13 @@ class CreateSpaceStepThreeActivity : AppCompatActivity() {
     private var bitmapThumbnail: Bitmap? = null
     private var bitmapOriginal: Bitmap? = null
     private var rotationDegree: Float? = null
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_space_step_three)
-
+        auth = FirebaseAuth.getInstance()
+        auth.signInAnonymously()
         fabCamera = this.findViewById(R.id.fab_camera)
         fabSwitchCamera = findViewById(R.id.fab_switch_camera)
         fabFlash = findViewById(R.id.fab_flash)
@@ -79,7 +82,7 @@ class CreateSpaceStepThreeActivity : AppCompatActivity() {
             val cursor = dbHandler.getAllSpaces()
             cursor!!.moveToFirst()
             val bos = ByteArrayOutputStream()
-            bitmapOriginal?.compress(Bitmap.CompressFormat.JPEG, 100, bos)
+            bitmapOriginal?.compress(Bitmap.CompressFormat.JPEG, 80, bos)
             val img = bos.toByteArray()
             val spaceTitle = cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_TITLE))
 
@@ -127,6 +130,7 @@ class CreateSpaceStepThreeActivity : AppCompatActivity() {
     }
 
     private fun uploadFB(title: String, index: String, img: ByteArray, dbHelper: BunkerDBHelper) {
+
         val storage = FirebaseStorage.getInstance()
 
         val storageRef = storage.reference

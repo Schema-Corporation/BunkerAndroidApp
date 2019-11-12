@@ -18,12 +18,15 @@ class SpacesAdapter (var list: List<SpaceInfoDTO>): RecyclerView.Adapter<SpacesV
     override fun getItemCount(): Int {
         return list.size
     }
-
     override fun onBindViewHolder(holder: SpacesViewHolder, position: Int) {
         holder.spaceTitleTextView.text = list[position].title
         holder.spaceAddressTextView.text = list[position].address
-        Picasso.get().load(list[position].firstPhoto).fit().into(holder.spacePhotoImageView)
-
+        Picasso.get()
+            .load(list[position].firstPhoto)
+            .error(R.drawable.ic_error_outline_black_24dp)
+            .placeholder(R.drawable.progress_animation)
+            .fit()
+            .into(holder.spacePhotoImageView)
         //val spaceId = list[position].id
 
         holder.spaceDetailsButton.setOnClickListener {

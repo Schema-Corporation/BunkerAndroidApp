@@ -24,13 +24,6 @@ class CreateSpaceStepThreeDot1Activity : AppCompatActivity() {
     private lateinit var photo6Button: ImageButton
     private lateinit var nextButton: Button
 
-    private var bitmap1Thumbnail: Bitmap? = null
-    private var bitmap2Thumbnail: Bitmap? = null
-    private var bitmap3Thumbnail: Bitmap? = null
-    private var bitmap4Thumbnail: Bitmap? = null
-    private var bitmap5Thumbnail: Bitmap? = null
-    private var bitmap6Thumbnail: Bitmap? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_space_step_three_dot1)
@@ -40,7 +33,7 @@ class CreateSpaceStepThreeDot1Activity : AppCompatActivity() {
         photo4Button = findViewById(R.id.photo_4_image_photo)
         photo5Button = findViewById(R.id.photo_5_image_photo)
         photo6Button = findViewById(R.id.photo_6_image_photo)
-        nextButton = findViewById(R.id.step_3_next_button)
+        nextButton = this.findViewById(R.id.step_3_next_button)
 
         photo1Button.setOnClickListener {
             val intent = Intent(this, CreateSpaceStepThreeActivity::class.java)
@@ -103,6 +96,16 @@ class CreateSpaceStepThreeDot1Activity : AppCompatActivity() {
         }
     }
 
+    private fun loadingAnimation(imageButton: ImageButton, url: String, rotationDegree: Float) {
+        Picasso.get()
+            .load(url)
+            .error(R.drawable.ic_error_outline_black_24dp)
+            .placeholder(R.drawable.progress_animation)
+            .fit()
+            .into(imageButton)
+        imageButton.rotation = rotationDegree
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
@@ -125,30 +128,24 @@ class CreateSpaceStepThreeDot1Activity : AppCompatActivity() {
                     val photoURL6 =
                         cursor.getString(cursor.getColumnIndex(BunkerDBHelper.COLUMN_PHOTO6))
                     if (photoURL1.isNotBlank()) {
-                        Picasso.get().load(photoURL1).fit().into(photo1Button)
-                            photo1Button.rotation = rotationDegree
+                        loadingAnimation(photo1Button, photoURL1, rotationDegree)
+                        if (photoURL2.isNotBlank()) {
+                            loadingAnimation(photo2Button, photoURL2, rotationDegree)
                         }
-                    if (photoURL2.isNotBlank()) {
-                        Picasso.get().load(photoURL2).fit().into(photo2Button)
-                            photo2Button.rotation = rotationDegree
+                        if (photoURL3.isNotBlank()) {
+                            loadingAnimation(photo3Button, photoURL3, rotationDegree)
                         }
-                    if (photoURL3.isNotBlank()) {
-                        Picasso.get().load(photoURL3).fit().into(photo3Button)
-                            photo3Button.rotation = rotationDegree
+                        if (photoURL4.isNotBlank()) {
+                            loadingAnimation(photo4Button, photoURL4, rotationDegree)
                         }
-                    if (photoURL4.isNotBlank()) {
-                        Picasso.get().load(photoURL4).fit().into(photo4Button)
-                            photo4Button.rotation = rotationDegree
+                        if (photoURL5.isNotBlank()) {
+                            loadingAnimation(photo5Button, photoURL5, rotationDegree)
                         }
-                    if (photoURL5.isNotBlank()) {
-                        Picasso.get().load(photoURL5).fit().into(photo5Button)
-                            photo5Button.rotation = rotationDegree
-                        }
-                    if (photoURL6.isNotBlank()) {
-                        Picasso.get().load(photoURL6).fit().into(photo6Button)
-                            photo6Button.rotation = rotationDegree
+                        if (photoURL6.isNotBlank()) {
+                            loadingAnimation(photo6Button, photoURL6, rotationDegree)
                         }
 
+                    }
                 }
             }
         }
