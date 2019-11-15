@@ -16,5 +16,4 @@ class SpacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     var spaceStatusIconImageVIew: ImageView = itemView.findViewById(R.id.space_status_icon_item)
     var spaceDisableButton: Button = itemView.findViewById(R.id.disable_space_button_item)
     var spaceDetailsButton: Button = itemView.findViewById(R.id.details_space_button_item)
-
 }

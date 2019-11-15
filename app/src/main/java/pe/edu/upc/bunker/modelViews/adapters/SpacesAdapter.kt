@@ -10,8 +10,10 @@ import pe.edu.upc.bunker.dto.SpaceInfoDTO
 import pe.edu.upc.bunker.modelViews.activities.SpaceDetailsActivity
 
 class SpacesAdapter (var list: List<SpaceInfoDTO>): RecyclerView.Adapter<SpacesViewHolder>(){
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpacesViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.spaces_recycler_view_view_holder, parent, false)
+
         return SpacesViewHolder(view)
     }
 
