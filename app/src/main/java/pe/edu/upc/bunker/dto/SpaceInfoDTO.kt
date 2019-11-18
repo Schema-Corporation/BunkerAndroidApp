@@ -28,7 +28,7 @@ data class SpaceInfoDTO (
     val spaceType: Int,
 
     @Expose
-    val status: Int,
+    var status: Int,
 
     @Expose
     val title: String
