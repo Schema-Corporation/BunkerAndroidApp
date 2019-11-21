@@ -23,7 +23,8 @@
         android:roundIcon="@mipmap/ic_launcher_foreground"
         android:supportsRtl="true"
         android:theme="@style/MyTheme.DayNight">
-        <activity android:name=".modelViews.activities.LessorFormActivity"></activity>
+        <activity android:name=".SplashActivity"></activity>
+        <activity android:name=".modelViews.activities.LessorFormActivity" />
         <activity android:name=".modelViews.activities.CreateSpaceStepThreeDot1Activity" />
         <activity android:name=".modelViews.activities.SpaceDetailsActivity" />
         <activity

@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -64,14 +63,14 @@ class HomeFragment : Fragment() {
     private fun getSpacesInfo() {
         val sharedPreferences = this.activity?.getSharedPreferences("Login", Context.MODE_PRIVATE)
         val token = sharedPreferences?.getString("Token", "")
-        val lessorId = 1
+        val lessorId = sharedPreferences?.getInt("LessorId", 0) as Int
 
         val bearerToken = "Bearer $token"
 
         spacesRepo.getSpacesByLessorId(lessorId, bearerToken)
             .enqueue(object : Callback<List<SpaceInfoDTO>> {
             override fun onFailure(call: Call<List<SpaceInfoDTO>>, t: Throwable) {
-                Toast.makeText(activity, "Log FAILED", Toast.LENGTH_SHORT).show()
+                Log.e("NetworkingDebug", "Could not connect to back-end", t)
             }
 
             override fun onResponse(call: Call<List<SpaceInfoDTO>>, response: Response<List<SpaceInfoDTO>>) {
