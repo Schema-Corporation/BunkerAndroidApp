@@ -63,6 +63,7 @@ class SpaceDetailsActivity : AppCompatActivity() {
         }
 
         when (mySpace.spaceType) {
+            0 -> spaceTypeTextView.text = "Oficina"
             1 -> spaceTypeTextView.text = "Oficina"
             2 -> spaceTypeTextView.text = "Espacio de Trabajo"
             3 -> spaceTypeTextView.text = "Almacén"
