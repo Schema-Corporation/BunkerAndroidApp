@@ -68,7 +68,7 @@ class SettingsFragment : Fragment() {
         termsConditionsCardView.setOnClickListener {
             val termsCon = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("https://firebasestorage.googleapis.com/v0/b/bunker-253200.appspot.com/o/t%26c%2FTerminos_y_Condiciones_Bunker.pdf?alt=media&token=87383a55-1ec9-4996-8847-9980072e8984")
+                Uri.parse("https://firebasestorage.googleapis.com/v0/b/bunker-258012.appspot.com/o/tyc%2FBUNKER%20-%20T%C3%89RMINOS%20Y%20CONDICIONES.pdf?alt=media&token=5b7882bb-1778-4006-9b5f-4b27a1d43225")
             )
             startActivity(termsCon)
         }

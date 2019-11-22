@@ -70,6 +70,15 @@ class SignUpActivity : AppCompatActivity() {
             } else {
                 passwordEditLayout.error = null
             }
+//borrar luego
+           /* val loginIntent =
+                Intent(
+                    applicationContext,
+                    LessorFormActivity::class.java
+                    //NavigationActivity::class.java
+                )
+            startActivity(loginIntent)
+            finish()*/
             if (userNameEditLayout.error.isNullOrEmpty() && passwordEditLayout.error.isNullOrEmpty()) {
                 val user = UserLoginDTO()
                 user.email = username
@@ -138,7 +147,8 @@ class SignUpActivity : AppCompatActivity() {
                                                         val token = lstToken[1]
                                                         Log.d("Debug", "Token: $token")
                                                         val sharedPref =
-                                                            this@SignUpActivity.getPreferences(
+                                                            this@SignUpActivity.getSharedPreferences(
+                                                                "SignUp",
                                                                 Context.MODE_PRIVATE
                                                             )
                                                                 ?: return
@@ -146,10 +156,17 @@ class SignUpActivity : AppCompatActivity() {
                                                             putString("Token", token)
                                                             apply()
                                                         }
+
+                                                        val loginResponse = response.body() as LoginResponseDTO
+                                                        sharedPref.edit().putInt("UserId", loginResponse.id).apply()
+
+                                                        sharedPref.edit().putString("UserEmail", user.email).apply()
+
                                                         val loginIntent =
                                                             Intent(
                                                                 applicationContext,
-                                                                NavigationActivity::class.java
+                                                                LessorFormActivity::class.java
+                                                                //NavigationActivity::class.java
                                                             )
                                                         startActivity(loginIntent)
                                                         finish()
@@ -173,7 +190,7 @@ class SignUpActivity : AppCompatActivity() {
                         }
                     }
                 })
-            }
+           }
         }
     }
 

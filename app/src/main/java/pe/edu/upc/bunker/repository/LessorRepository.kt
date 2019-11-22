@@ -1,5 +1,6 @@
 package pe.edu.upc.bunker.repository
 
+import pe.edu.upc.bunker.dto.LessorDTO
 import pe.edu.upc.bunker.models.Lessor
 import retrofit2.Call
 import retrofit2.http.*
@@ -13,8 +14,8 @@ interface LessorRepository {
 
     @POST("api/v1/lessors/")
     fun postLessor(
-        @Header("Authorization") authorization: String, @Body lessor: Lessor
-    ): Call<Lessor>
+        @Header("Authorization") authorization: String, @Body lessor: LessorDTO
+    ): Call<LessorDTO>
 
     @PUT("api/v1/lessors/{id}")
     fun updateLessor(@Header("Authorization") authorization: String, @Body lessor: Lessor): Call<Lessor>

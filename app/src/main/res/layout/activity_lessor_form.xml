@@ -186,24 +186,15 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/til_last_names_register" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_doc_type_register"
-                        android:layout_width="300dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/doc_type_label">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/doc_type_register_field"
-                            android:layout_width="match_parent"
+                        <Spinner
+                            android:id="@+id/doc_type_spinner"
+                            android:layout_width="250dp"
                             android:layout_height="wrap_content"
-                            android:ems="30"
-                            android:fontFamily="cursive"
-                            android:hint="@string/doc_type_placeholder"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/doc_type_label"
 
+                            />
 
                     <TextView
                         android:id="@+id/doc_num_label"
@@ -215,7 +206,7 @@
                         android:text="@string/doc_num"
                         android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/til_doc_type_register" />
+                        app:layout_constraintTop_toBottomOf="@id/doc_type_spinner" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_doc_num_register"
@@ -279,7 +270,7 @@
                     />
 
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/cancel_register_button"
                         style="@style/Widget.AppCompat.Button.Borderless.Colored"
                         android:layout_width="0dp"
@@ -294,7 +285,7 @@
                         app:layout_constraintHorizontal_weight="1"
                         app:layout_constraintStart_toStartOf="parent" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/register_button"
                         style="@style/Widget.AppCompat.Button.Colored"
                         android:layout_width="0dp"
