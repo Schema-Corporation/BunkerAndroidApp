@@ -26,7 +26,7 @@ data class Space(
     val rentPrice: Any,
 
     @Expose
-    val status: Int,
+    var status: Int,
 
     @SerializedName("updated_at")
     @Expose

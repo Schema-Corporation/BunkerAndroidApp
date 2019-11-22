@@ -54,7 +54,7 @@ class SpaceDetailsActivity : AppCompatActivity() {
 
         spaceTitleTextView.text = mySpace.title
         spaceDescriptionTextView.text = mySpace.description
-        spaceAddressTextView.text = mySpace.address
+        spaceAddressTextView.text = mySpace.address.split(",")[0]
         spaceRentPriceTextView.text = mySpace.rentPrice.toString()
 
         when (mySpace.status) {
