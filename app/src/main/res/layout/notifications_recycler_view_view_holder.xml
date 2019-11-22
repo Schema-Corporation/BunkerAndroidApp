@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/notificationsItemCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/quantum_black_divider"
+        app:strokeWidth="1dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/notificationTypeIcon"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_book_black_24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/spaceTitleLabelNotification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Espacio:"
+                app:layout_constraintStart_toEndOf="@id/notificationTypeIcon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/spaceTitleTextViewNotification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toEndOf="@id/spaceTitleLabelNotification"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/userFromLabelNotification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Usuario interesado:"
+                app:layout_constraintStart_toEndOf="@id/notificationTypeIcon"
+                app:layout_constraintTop_toBottomOf="@id/spaceTitleLabelNotification" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/userFromTextViewNotification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="4dp"
+                app:layout_constraintStart_toEndOf="@id/userFromLabelNotification"
+                app:layout_constraintTop_toBottomOf="@id/spaceTitleTextViewNotification" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/dateLabelNotification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Fecha de visita:"
+                app:layout_constraintStart_toEndOf="@id/notificationTypeIcon"
+                app:layout_constraintTop_toBottomOf="@id/userFromLabelNotification" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/dateTextViewNotification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toEndOf="@id/userFromLabelNotification"
+                app:layout_constraintTop_toBottomOf="@id/userFromTextViewNotification" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".modelViews.activities.LessorFormActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-191dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/register_lessor_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/form_title"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/form_card_view"
+                style="@style/Widget.MaterialComponents.CardView"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/register_lessor_title">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/ruc_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="cursive"
+                        android:text="@string/ruc"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_ruc_register"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ruc_label">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/ruc_register_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="11"
+                            android:fontFamily="cursive"
+                            android:hint="@string/ruc_placeholder"
+                            android:inputType="number"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/commercial_name_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="cursive"
+                        android:text="@string/commercial_name"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/til_ruc_register" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_commercial_name_register"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/commercial_name_label">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/commercial_name_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="30"
+                            android:fontFamily="cursive"
+                            android:hint="@string/commercial_name_placeholder"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/names_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="cursive"
+                        android:text="@string/names"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/til_commercial_name_register" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_names_register"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/names_label">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/names_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="30"
+                            android:fontFamily="cursive"
+                            android:hint="@string/names_placeholder"
+                            android:maxLines="1" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <TextView
+                        android:id="@+id/last_names_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="cursive"
+                        android:text="@string/last_names"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/til_names_register" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_last_names_register"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/last_names_label">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/last_names_register_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="30"
+                            android:fontFamily="cursive"
+                            android:hint="@string/last_names_placeholder"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <TextView
+                        android:id="@+id/doc_type_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="cursive"
+                        android:text="@string/doc_type"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/til_last_names_register" />
+
+                        <Spinner
+                            android:id="@+id/doc_type_spinner"
+                            android:layout_width="250dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/doc_type_label"
+
+                            />
+
+                    <TextView
+                        android:id="@+id/doc_num_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="cursive"
+                        android:text="@string/doc_num"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/doc_type_spinner" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_doc_num_register"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/doc_num_label">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/doc_num_register_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="30"
+                            android:fontFamily="cursive"
+                            android:hint="@string/doc_num_placeholder"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <TextView
+                        android:id="@+id/cel_num_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="cursive"
+                        android:text="@string/cel_number"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/til_doc_num_register" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_cel_num_register"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/cel_num_label">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/cel_num_register_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="30"
+                            android:fontFamily="cursive"
+                            android:hint="@string/cel_number_placeholder"
+                            android:inputType="number"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/terms_conditions_checkbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/accept_terms_conditions"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/til_cel_num_register" />
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/cancel_register_button"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:fontFamily="cursive"
+                        android:text="@string/cancel_text"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/register_button"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/terms_conditions_checkbox" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/register_button"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="18dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="12dp"
+                        android:backgroundTint="@color/colorAccent"
+                        android:fontFamily="cursive"
+                        android:text="@string/registrar"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@id/cancel_register_button"
+                        app:layout_constraintTop_toBottomOf="@id/terms_conditions_checkbox" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
