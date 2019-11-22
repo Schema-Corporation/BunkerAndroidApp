@@ -77,9 +77,9 @@ class CreateSpaceStepOneActivity : AppCompatActivity() {
             spaceTypeTextView = findViewById(R.id.space_type_dropdown)
             var spaceType = 2
             when (spaceTypeTextView.text.toString()) {
-                "Oficina" -> spaceType = 0
-                "Espacio de trabajo" -> spaceType = 1
-                "Almacén" -> spaceType = 2
+                "Oficina" -> spaceType = 1
+                "Espacio de trabajo" -> spaceType = 2
+                "Almacén" -> spaceType = 3
             }
             val height = heightEditText.text.toString()
             when {

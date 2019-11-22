@@ -57,9 +57,7 @@
                     android:layout_marginTop="35dp"
                     android:src="@drawable/ic_person_black_24dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-
-                    />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/user_field_text"

@@ -17,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
             <TextView
                 android:id="@+id/register_lessor_title"
                 android:layout_width="wrap_content"
@@ -28,7 +27,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/form_card_view"
@@ -71,6 +69,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ems="11"
+                            android:maxLength="11"
                             android:fontFamily="cursive"
                             android:hint="@string/ruc_placeholder"
                             android:inputType="number"
@@ -102,6 +101,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ems="30"
+                            android:maxLength="30"
                             android:fontFamily="cursive"
                             android:hint="@string/commercial_name_placeholder"
                             android:maxLines="1" />
@@ -132,6 +132,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ems="30"
+                            android:maxLength="30"
                             android:fontFamily="cursive"
                             android:hint="@string/names_placeholder"
                             android:maxLines="1" />
@@ -164,6 +165,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ems="30"
+                            android:maxLength="30"
                             android:fontFamily="cursive"
                             android:hint="@string/last_names_placeholder"
                             android:maxLines="1" />
@@ -189,7 +191,6 @@
                             android:layout_marginStart="16dp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/doc_type_label"
-
                             />
 
                     <TextView
@@ -219,9 +220,9 @@
                             android:ems="30"
                             android:fontFamily="cursive"
                             android:hint="@string/doc_num_placeholder"
+                            android:inputType="number"
                             android:maxLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
-
 
                     <TextView
                         android:id="@+id/cel_num_label"
@@ -247,7 +248,8 @@
                             android:id="@+id/cel_num_register_field"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ems="30"
+                            android:ems="9"
+                            android:maxLength="9"
                             android:fontFamily="cursive"
                             android:hint="@string/cel_number_placeholder"
                             android:inputType="number"
